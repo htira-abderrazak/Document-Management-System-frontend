@@ -1,0 +1,160 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+
+<div class="row header">
+  <div class="col-sm-2">
+    <h1>Files</h1>
+  </div>
+
+  <div class="col-sm-10 input-container">
+    <i class="material-icons search">search</i>
+    <input type="text" placeholder="Search" class="search" />
+  </div>
+</div>
+<div class="row body">
+  <div class="col-sm-2 sidebar">
+    <div ngbDropdown class="d-inline-block">
+      <button class="add-buttom" id="dropdownBasic1" ngbDropdownToggle>
+        <i class="material-icons sidebar-icon">add</i>
+        New
+      </button>
+      <div
+        ngbDropdownMenu
+        aria-labelledby="dropdownBasic1"
+        style="width: 200px"
+        class="drop-down"
+      >
+        <button
+          ngbDropdownItem
+          (click)="open(content)"
+          class="drop-down-buttom"
+        >
+          <i class="material-icons">create_new_folder</i>New Folder
+        </button>
+        <button ngbDropdownItem class="drop-down-button">
+          <label for="fileUpload">
+            <i class="material-icons">upload_file</i>
+            New File
+          </label>
+          <input
+            type="file"
+            id="fileUpload"
+            style="display: none"
+            (change)="onFileChange($event)"
+          />
+        </button>
+      </div>
+    </div>
+    <button class="main-buttoms" routerLink="./mydrive">
+      <i class="material-icons sidebar-icon">storage</i>
+      My drive
+    </button>
+    <button class="main-buttoms">
+      <i class="material-icons sidebar-icon">favorite</i>
+      Favorite
+    </button>
+    <button class="main-buttoms" routerLink="">
+      <i class="material-icons sidebar-icon">schedule</i>
+      Recent
+    </button>
+    <button class="main-buttoms">
+      <i class="material-icons sidebar-icon">delete</i>
+      Trash
+    </button>
+    <button class="main-buttoms">
+      <i class="material-icons sidebar-icon">cloud</i>
+      Storage
+    </button>
+  </div>
+  <div class="col-sm-10 main-content">
+    <router-outlet *ngIf="showChild"></router-outlet>
+  </div>
+  <div
+    class="fixed-bottom end-0 p-3"
+    style="
+      background-color: #f0f0f0;
+      border: 1px solid #ddd;
+      z-index: 10;
+      display: none;
+    "
+    id="myDiv"
+  >
+    <div class="d-flex align-items-center">
+      <button
+        type="button"
+        class="btn-close ms-auto"
+        (click)="closeWindow()"
+      ></button>
+    </div>
+    <div class="file-upload">
+      <div class="spinner-border m-1" role="status" id="spinner">
+        <span class="sr-only"></span>
+      </div>
+      <div id="loading-message">
+        <p>file Upload...</p>
+      </div>
+      <div id="successfull-message" style="color: green; display: none">
+        <p>successfull</p>
+      </div>
+      <div id="error-message" style="color: red; display: none">
+        <p>error, try later</p>
+      </div>
+      <div id="error-name-message" style="color: red; display: none">
+        <p>this name already exist</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="tem">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">New Folder</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <div class="input-group">
+            <input
+              type="text"
+              id="foldername"
+              class="form-control"
+              [formControl]="name"
+            />
+          </div>
+        </div>
+      </form>
+      <p
+        style="color: red"
+        [ngStyle]="{ display: this.error == '' ? 'none' : 'block' }"
+      >
+        {{ this.error }}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.dismiss('cancel Click')"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="createFolder(name.value)"
+        [disabled]="name.value?.trim() === ''"
+      >
+        Create
+      </button>
+    </div>
+  </div>
+</ng-template>

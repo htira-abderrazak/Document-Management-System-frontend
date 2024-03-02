@@ -1,0 +1,30 @@
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+/>
+<h2>My Drive</h2>
+
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th style="width: 350px">Name</th>
+        <th style="width: 150px">created at</th>
+        <th style="width: 150px">Last modifid</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of folders"
+        class="table"
+        routerLink="/folder/{{ item.id }}"
+      >
+        <td><span class="material-symbols-outlined"> hard_drive </span></td>
+        <td>{{ item.name }}</td>
+        <td>{{ separateDateTime(item.created_at) }}</td>
+        <td>{{ separateDateTime(item.updated_at) }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
