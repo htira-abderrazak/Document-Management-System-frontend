@@ -1,9 +1,15 @@
 import { LocalStorageService } from 'angular-web-storage';
 import { CommonModule } from '@angular/common';
-import { inject, Component, OnInit, TemplateRef } from '@angular/core';
 import {
-  Router,
+  inject,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import {
   ActivatedRoute,
+  Router,
   RouterModule,
   RouterOutlet,
 } from '@angular/router';
@@ -16,6 +22,10 @@ import {
   NgbModal,
   NgbDropdownModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { PrimeNGConfig } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
+
 @Component({
   selector: 'app-folder',
   standalone: true,
@@ -25,6 +35,8 @@ import {
     RouterModule,
     NgbDropdownModule,
     NgbDatepickerModule,
+    ContextMenuModule,
+    MenuModule,
   ],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.css',
@@ -36,10 +48,16 @@ export class FolderComponent implements OnInit {
   show_grid = true;
   private modalRef: any;
   private modalService = inject(NgbModal);
-  closeResult='';
+  closeResult = '';
+
+  contextMenuItems: MenuModule[];
+  selectedId = '';
+  @ViewChild('content') modalrename!: TemplateRef<any>;
+
   constructor(
     private directoryserverce: DirectorysericeService,
     private activatedRoute: ActivatedRoute,
+    private primengConfig: PrimeNGConfig,
     private router: Router,
     private local: LocalStorageService
   ) {
@@ -49,8 +67,19 @@ export class FolderComponent implements OnInit {
       id: '',
       files: [],
     };
+    this.contextMenuItems = [
+      {
+        label: 'rename',
+        icon: 'pi pi-edit',
+        command: () => this.open(this.modalrename),
+      },
+      { label: 'Delete', icon: 'pi pi-times' },
+    ];
   }
+
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
+
     this.activatedRoute.paramMap.subscribe((paramId) => {
       this.id = paramId.get('id');
       this.directoryserverce
@@ -61,6 +90,23 @@ export class FolderComponent implements OnInit {
       this.local.set('folder', this.id);
     });
   }
+
+  onContextMenu(event: MouseEvent) {
+    event.preventDefault();
+    console.log('Context Menu Event:', event);
+  }
+
+  // open folder with context menu
+  // openFolder() {
+  //   this.router.navigate(['/folder/' + this.local.get('selectedFolder')]);
+  // }
+  
+  handleMenuClick(event: MouseEvent, id: string): void {
+    event.preventDefault(); // Prevent the default behavior of routerLink
+    event.stopPropagation(); // Stop event propagation to prevent navigating to the folder route
+    this.local.set('selectedFolder', id); // set the id in the localstorge to manage the folder selected
+  }
+
   open(content: TemplateRef<any>) {
     this.modalRef = this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
@@ -87,6 +133,7 @@ export class FolderComponent implements OnInit {
     window.open(this.API_URL + url, '_blank');
   }
 
+  // remove seconds and minutes froim date
   separateDateTime(time: any) {
     const dateTime = new Date(time);
     const day = dateTime.getDate();
@@ -97,15 +144,11 @@ export class FolderComponent implements OnInit {
     return `${day}/${month}/${year} ${hour}:00`;
   }
 
+  //show folders and  files in grid or liste
   showGrid() {
     this.show_grid = true;
   }
   showList() {
     this.show_grid = false;
-  }
-  onRightClick(event: MouseEvent) {
-    event.preventDefault(); 
-
-    console.log('Right-clicked!');
   }
 }

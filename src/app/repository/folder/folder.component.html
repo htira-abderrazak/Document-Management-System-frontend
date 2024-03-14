@@ -18,16 +18,24 @@
 </div>
 
 <div class="main">
-  <div *ngIf="this.show_grid == true" >
+  <div *ngIf="this.show_grid == true">
     <div
       class="folder"
       *ngFor="let item of data.folders"
       routerLink="/folder/{{ item.id }}"
-      (contextmenu)="onRightClick($event)"
+      #img
     >
-      <i class="material-icons">folder </i>
-      <h1>{{ item.name }}</h1>
+      <span>
+        <i class="material-icons">folder </i>
+        <h1>{{ item.name }}</h1>
+      </span>
+      <p-contextMenu
+        [target]="img"
+        [model]="contextMenuItems"
+        (click)="handleMenuClick($event, item.id)"
+      ></p-contextMenu>
     </div>
+
     <div
       class="folder"
       *ngFor="let item of data.files"
@@ -78,3 +86,39 @@
     />
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="tem">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">New Folder</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3"></div>
+      </form>
+      <!-- <p
+        style="color: red"
+        [ngStyle]="{ display: this.error == '' ? 'none' : 'block' }"
+      >
+        {{ this.error }}
+      </p> -->
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.dismiss('cancel Click')"
+      >
+        Cancel
+      </button>
+      <button type="button" class="btn btn-outline-dark">Create</button>
+    </div>
+  </div>
+</ng-template>
+

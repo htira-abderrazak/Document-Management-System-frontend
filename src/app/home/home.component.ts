@@ -1,7 +1,6 @@
 import { Component, inject, TemplateRef } from '@angular/core';
 import {
   ModalDismissReasons,
-  NgbDatepickerModule,
   NgbModal,
   NgbDropdownModule
 } from '@ng-bootstrap/ng-bootstrap';
@@ -24,7 +23,6 @@ import { takeUntil, mergeMap, tap } from 'rxjs/operators';
     RouterModule,
     MyDiskComponent,
     NgbDropdownModule,
-    NgbDatepickerModule,
     ReactiveFormsModule,
   ],
   templateUrl: './home.component.html',
