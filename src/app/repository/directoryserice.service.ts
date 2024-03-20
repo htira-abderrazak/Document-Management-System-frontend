@@ -26,4 +26,10 @@ export class DirectorysericeService {
   createFile(data: FormData) {
     return this.http.post(this.API_URL+'/file/',data)
   }
+  renameFolder(name: string, id:string) {
+    const body = {
+      name : name
+    }
+    return this.http.put(this.API_URL+'/folder/'+id+'/',body)
+  }
 }

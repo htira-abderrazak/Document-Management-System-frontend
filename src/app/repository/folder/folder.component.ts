@@ -25,6 +25,9 @@ import {
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { PrimeNGConfig } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Folder } from '../folder';
+import { error } from 'console';
 
 @Component({
   selector: 'app-folder',
@@ -37,6 +40,7 @@ import { MenuModule } from 'primeng/menu';
     NgbDatepickerModule,
     ContextMenuModule,
     MenuModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.css',
@@ -49,9 +53,10 @@ export class FolderComponent implements OnInit {
   private modalRef: any;
   private modalService = inject(NgbModal);
   closeResult = '';
-
+  name = new FormControl('');
   contextMenuItems: MenuModule[];
   selectedId = '';
+  error = '';
   @ViewChild('content') modalrename!: TemplateRef<any>;
 
   constructor(
@@ -100,13 +105,14 @@ export class FolderComponent implements OnInit {
   // openFolder() {
   //   this.router.navigate(['/folder/' + this.local.get('selectedFolder')]);
   // }
-  
+
   handleMenuClick(event: MouseEvent, id: string): void {
     event.preventDefault(); // Prevent the default behavior of routerLink
     event.stopPropagation(); // Stop event propagation to prevent navigating to the folder route
     this.local.set('selectedFolder', id); // set the id in the localstorge to manage the folder selected
   }
 
+  //modal rename
   open(content: TemplateRef<any>) {
     this.modalRef = this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
@@ -120,6 +126,8 @@ export class FolderComponent implements OnInit {
       );
   }
   private getDismissReason(reason: any): string {
+    this.error = ""
+    this.name.setValue('');
     switch (reason) {
       case ModalDismissReasons.ESC:
         return 'by pressing ESC';
@@ -129,6 +137,23 @@ export class FolderComponent implements OnInit {
         return `with: ${reason}`;
     }
   }
+  rename(name: any, isfolder: boolean) {
+    if (isfolder == true) {
+      this.directoryserverce
+        .renameFolder(name, this.local.get('selectedFolder'))
+        .subscribe(
+          (data: any) => {
+            window.location.reload();
+            this.modalService.dismissAll();
+          },
+          (error) => {
+            if (error.status == '400') this.error = 'name already exist';
+            else this.error = 'error try later';
+          }
+        );
+    }
+  }
+
   openfile(url: string) {
     window.open(this.API_URL + url, '_blank');
   }
