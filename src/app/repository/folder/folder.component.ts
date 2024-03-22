@@ -55,8 +55,8 @@ export class FolderComponent implements OnInit {
   name = new FormControl('');
   contextMenuItems: MenuModule[];
   error = '';
-  selectedname: any;
-  selectedid: any;
+  selectedname: any; //the name selected to edit file or folder
+  selectedid: any; //the id selected to edit file or folder
   @ViewChild('content') modalrename!: TemplateRef<any>;
 
   constructor(
@@ -98,11 +98,6 @@ export class FolderComponent implements OnInit {
         });
       this.local.set('folder', this.id);
     });
-  }
-
-  onContextMenu(event: MouseEvent) {
-    event.preventDefault();
-    console.log('Context Menu Event:', event);
   }
 
   handleMenuClick(event: MouseEvent, id: string): void {
@@ -149,6 +144,7 @@ export class FolderComponent implements OnInit {
 
   }
 
+  //open file
   openfile(url: string) {
     window.open(this.API_URL + url, '_blank');
   }
@@ -172,6 +168,7 @@ export class FolderComponent implements OnInit {
     this.show_grid = false;
   }
 
+  //delete folder
   deleteFolder(name: any, id: any) {
     if (confirm('Are you sure to delete the folder ' + name + '?')) {
       this.directoryserverce.deleteFolder(id).subscribe(
@@ -189,6 +186,8 @@ export class FolderComponent implements OnInit {
       );
     }
   }
+
+  //function excute when the context menu show
   showContextMenu(itemname: any, itemid: any) {
     this.selectedid = itemid;
     this.selectedname = itemname;
