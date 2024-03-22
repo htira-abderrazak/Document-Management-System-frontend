@@ -26,8 +26,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { PrimeNGConfig } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Folder } from '../folder';
-import { error } from 'console';
+
 
 @Component({
   selector: 'app-folder',
@@ -136,8 +135,7 @@ export class FolderComponent implements OnInit {
         return `with: ${reason}`;
     }
   }
-  rename(name: any, isfolder: boolean) {
-    if (isfolder == true) {
+  rename(name: any) {
       this.directoryserverce.renameFolder(name, this.selectedid).subscribe(
         (data: any) => {
           window.location.reload();
@@ -148,7 +146,7 @@ export class FolderComponent implements OnInit {
           else this.error = 'error try later';
         }
       );
-    }
+
   }
 
   openfile(url: string) {
