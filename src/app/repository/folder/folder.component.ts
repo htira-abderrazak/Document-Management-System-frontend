@@ -55,8 +55,9 @@ export class FolderComponent implements OnInit {
   closeResult = '';
   name = new FormControl('');
   contextMenuItems: MenuModule[];
-  selectedId = '';
   error = '';
+  selectedname: any;
+  selectedid: any;
   @ViewChild('content') modalrename!: TemplateRef<any>;
 
   constructor(
@@ -75,10 +76,14 @@ export class FolderComponent implements OnInit {
     this.contextMenuItems = [
       {
         label: 'rename',
-        icon: 'pi pi-edit',
         command: () => this.open(this.modalrename),
       },
-      { label: 'Delete', icon: 'pi pi-times' },
+      {
+        label: 'Delete',
+        command: (event: any) => {
+          this.deleteFolder(this.selectedname, this.selectedid);
+        },
+      },
     ];
   }
 
@@ -101,15 +106,9 @@ export class FolderComponent implements OnInit {
     console.log('Context Menu Event:', event);
   }
 
-  // open folder with context menu
-  // openFolder() {
-  //   this.router.navigate(['/folder/' + this.local.get('selectedFolder')]);
-  // }
-
   handleMenuClick(event: MouseEvent, id: string): void {
     event.preventDefault(); // Prevent the default behavior of routerLink
     event.stopPropagation(); // Stop event propagation to prevent navigating to the folder route
-    this.local.set('selectedFolder', id); // set the id in the localstorge to manage the folder selected
   }
 
   //modal rename
@@ -126,7 +125,7 @@ export class FolderComponent implements OnInit {
       );
   }
   private getDismissReason(reason: any): string {
-    this.error = ""
+    this.error = '';
     this.name.setValue('');
     switch (reason) {
       case ModalDismissReasons.ESC:
@@ -139,18 +138,16 @@ export class FolderComponent implements OnInit {
   }
   rename(name: any, isfolder: boolean) {
     if (isfolder == true) {
-      this.directoryserverce
-        .renameFolder(name, this.local.get('selectedFolder'))
-        .subscribe(
-          (data: any) => {
-            window.location.reload();
-            this.modalService.dismissAll();
-          },
-          (error) => {
-            if (error.status == '400') this.error = 'name already exist';
-            else this.error = 'error try later';
-          }
-        );
+      this.directoryserverce.renameFolder(name, this.selectedid).subscribe(
+        (data: any) => {
+          window.location.reload();
+          this.modalService.dismissAll();
+        },
+        (error) => {
+          if (error.status == '400') this.error = 'name already exist';
+          else this.error = 'error try later';
+        }
+      );
     }
   }
 
@@ -175,5 +172,27 @@ export class FolderComponent implements OnInit {
   }
   showList() {
     this.show_grid = false;
+  }
+
+  deleteFolder(name: any, id: any) {
+    if (confirm('Are you sure to delete the folder ' + name + '?')) {
+      this.directoryserverce.deleteFolder(id).subscribe(
+        () => {
+          alert('deleted successfully!');
+          this.data.folders.splice(
+            this.data.folders.findIndex((obj) => obj.id === id),
+            1
+          );
+        },
+        (error) => {
+          if (error.status == '400') this.error = 'name already exist';
+          alert('error!');
+        }
+      );
+    }
+  }
+  showContextMenu(itemname: any, itemid: any) {
+    this.selectedid = itemid;
+    this.selectedname = itemname;
   }
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,9 @@ export class DirectorysericeService {
       name : name
     }
     return this.http.put(this.API_URL+'/folder/'+id+'/',body)
+  }
+
+  deleteFolder(id: string) {
+    return this.http.delete(this.API_URL+'/folder/'+id+'/')
   }
 }

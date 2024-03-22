@@ -30,9 +30,11 @@
         <h1>{{ item.name }}</h1>
       </span>
       <p-contextMenu
+        #menu
         [target]="img"
         [model]="contextMenuItems"
         (click)="handleMenuClick($event, item.id)"
+        (onShow)="showContextMenu(item.name,item.id)"
       ></p-contextMenu>
     </div>
 
@@ -130,7 +132,7 @@
         type="button"
         class="btn btn-outline-dark"
         [disabled]="name.value?.trim() === ''"
-        (click)="rename(name.value,true)"
+        (click)="rename(name.value, true)"
       >
         Rename
       </button>
