@@ -27,7 +27,6 @@ import { PrimeNGConfig } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-folder',
   standalone: true,
@@ -53,11 +52,14 @@ export class FolderComponent implements OnInit {
   private modalService = inject(NgbModal);
   closeResult = '';
   name = new FormControl('');
-  contextMenuItems: MenuModule[];
+  contextMenuItemsFolders: MenuModule[];
+  contextMenuItemsFiles: MenuModule[];
+
   error = '';
   selectedname: any; //the name selected to edit file or folder
   selectedid: any; //the id selected to edit file or folder
-  @ViewChild('content') modalrename!: TemplateRef<any>;
+  @ViewChild('renameFolder') modalrenamefolder!: TemplateRef<any>;
+  @ViewChild('renameFile') modalrenamefile!: TemplateRef<any>;
 
   constructor(
     private directoryserverce: DirectorysericeService,
@@ -72,10 +74,22 @@ export class FolderComponent implements OnInit {
       id: '',
       files: [],
     };
-    this.contextMenuItems = [
+    this.contextMenuItemsFolders = [
       {
         label: 'rename',
-        command: () => this.open(this.modalrename),
+        command: () => this.open(this.modalrenamefolder),
+      },
+      {
+        label: 'Delete',
+        command: (event: any) => {
+          this.deleteFolder(this.selectedname, this.selectedid);
+        },
+      },
+    ];
+    this.contextMenuItemsFiles = [
+      {
+        label: 'rename',
+        command: () => this.open(this.modalrenamefile),
       },
       {
         label: 'Delete',
@@ -105,7 +119,7 @@ export class FolderComponent implements OnInit {
     event.stopPropagation(); // Stop event propagation to prevent navigating to the folder route
   }
 
-  //modal rename
+  //modal open
   open(content: TemplateRef<any>) {
     this.modalRef = this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
@@ -130,20 +144,35 @@ export class FolderComponent implements OnInit {
         return `with: ${reason}`;
     }
   }
-  rename(name: any) {
-      this.directoryserverce.renameFolder(name, this.selectedid).subscribe(
-        (data: any) => {
-          window.location.reload();
-          this.modalService.dismissAll();
-        },
-        (error) => {
-          if (error.status == '400') this.error = 'name already exist';
-          else this.error = 'error try later';
-        }
-      );
 
+  renamefolder(name: any) {
+    this.directoryserverce.renameFolder(name, this.selectedid).subscribe(
+      (data: any) => {
+        window.location.reload();
+        this.modalService.dismissAll();
+      },
+      (error) => {
+        if (error.status == '400') this.error = 'name already exist';
+        else this.error = 'error try later';
+      }
+    );
   }
 
+  renamefile(name: any) {
+    const Data = new FormData();
+
+    Data.append('name', name);
+    this.directoryserverce.renameFile(Data, this.selectedid).subscribe(
+      (data: any) => {
+        window.location.reload();
+        this.modalService.dismissAll();
+      },
+      (error) => {
+        if (error.status == '400') this.error = 'name already exist';
+        else this.error = 'error try later';
+      }
+    );
+  }
   //open file
   openfile(url: string) {
     window.open(this.API_URL + url, '_blank');

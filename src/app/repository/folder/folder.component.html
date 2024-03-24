@@ -23,18 +23,17 @@
       class="folder"
       *ngFor="let item of data.folders"
       routerLink="/folder/{{ item.id }}"
-      #img
+      #folders
     >
       <span>
         <i class="material-icons">folder </i>
         <h1>{{ item.name }}</h1>
       </span>
       <p-contextMenu
-        #menu
-        [target]="img"
-        [model]="contextMenuItems"
+        [target]="folders"
+        [model]="contextMenuItemsFolders"
         (click)="handleMenuClick($event, item.id)"
-        (onShow)="showContextMenu(item.name,item.id)"
+        (onShow)="showContextMenu(item.name, item.id)"
       ></p-contextMenu>
     </div>
 
@@ -42,9 +41,16 @@
       class="folder"
       *ngFor="let item of data.files"
       (click)="openfile(item.file)"
+      #files
     >
       <i class="material-icons">picture_as_pdf </i>
       <h1>{{ item.name }}</h1>
+      <p-contextMenu
+        [target]="files"
+        [model]="contextMenuItemsFiles"
+        (click)="handleMenuClick($event, item.id)"
+        (onShow)="showContextMenu(item.name, item.id)"
+      ></p-contextMenu>
     </div>
   </div>
 
@@ -89,7 +95,7 @@
   </div>
 </div>
 
-<ng-template #content let-modal>
+<ng-template #renameFolder let-modal>
   <div class="tem">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Rename Folder</h4>
@@ -132,7 +138,7 @@
         type="button"
         class="btn btn-outline-dark"
         [disabled]="name.value?.trim() === ''"
-        (click)="rename(name.value)"
+        (click)="renamefolder(name.value)"
       >
         Rename
       </button>
@@ -140,3 +146,53 @@
   </div>
 </ng-template>
 
+<ng-template #renameFile let-modal>
+  <div class="tem">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Rename File</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <div class="input-group">
+            <input
+              type="text"
+              id="foldername"
+              class="form-control"
+              [formControl]="name"
+            />
+          </div>
+        </div>
+      </form>
+      <p
+        style="color: red"
+        [ngStyle]="{ display: this.error == '' ? 'none' : 'block' }"
+      >
+        {{ this.error }}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.dismiss('cancel Click')"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        [disabled]="name.value?.trim() === ''"
+        (click)="renamefile(name.value)"
+      >
+        Rename
+      </button>
+    </div>
+  </div>
+</ng-template>
