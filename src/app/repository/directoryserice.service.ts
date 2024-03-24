@@ -41,4 +41,8 @@ export class DirectorysericeService {
   renameFile(data: FormData, id: string) {
     return this.http.put(this.API_URL + '/file/' + id + '/', data);
   }
+
+  deleteFile(id: string) {
+    return this.http.delete(this.API_URL+'/file/'+id+'/')
+  }
 }

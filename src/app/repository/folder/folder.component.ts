@@ -94,7 +94,7 @@ export class FolderComponent implements OnInit {
       {
         label: 'Delete',
         command: (event: any) => {
-          this.deleteFolder(this.selectedname, this.selectedid);
+          this.deleteFile(this.selectedname, this.selectedid);
         },
       },
     ];
@@ -220,5 +220,24 @@ export class FolderComponent implements OnInit {
   showContextMenu(itemname: any, itemid: any) {
     this.selectedid = itemid;
     this.selectedname = itemname;
+  }
+
+  //delete file
+  deleteFile(name: any, id: any) {
+    if (confirm('Are you sure to delete the file ' + name + '?')) {
+      this.directoryserverce.deleteFile(id).subscribe(
+        () => {
+          alert('deleted successfully!');
+          this.data.folders.splice(
+            this.data.files.findIndex((obj) => obj.id === id),
+            1
+          );
+        },
+        (error) => {
+          if (error.status == '400') this.error = 'name already exist';
+          alert('error!');
+        }
+      );
+    }
   }
 }
