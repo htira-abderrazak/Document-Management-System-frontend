@@ -2,96 +2,107 @@
   href="https://fonts.googleapis.com/icon?family=Material+Icons"
   rel="stylesheet"
 />
-<div class="head">
-  <div class="navigation-pane">
-    <h2 *ngFor="let item of data.adress">
-      <p routerLink="/folder/{{ item[1] }}">{{ item[0] }}</p>
-      <i class="material-icons">chevron_right</i>
-    </h2>
-  </div>
-  <div class="button-display">
-    <button><i class="material-icons" (click)="showList()">menu</i></button>
-    <button>
-      <i class="material-icons" (click)="showGrid()">grid_view</i>
-    </button>
-  </div>
-</div>
 
-<div class="main">
-  <div *ngIf="this.show_grid == true">
-    <div
-      class="folder"
-      *ngFor="let item of data.folders"
-      routerLink="/folder/{{ item.id }}"
-      #folders
-    >
-      <span>
-        <i class="material-icons">folder </i>
-        <h1>{{ item.name }}</h1>
-      </span>
-      <p-contextMenu
-        [target]="folders"
-        [model]="contextMenuItemsFolders"
-        (click)="handleMenuClick($event, item.id)"
-        (onShow)="showContextMenu(item.name, item.id)"
-      ></p-contextMenu>
+<div class="mycontainer">
+  <div class="left">
+    <div class="head">
+      <div class="navigation-pane">
+        <h2 *ngFor="let item of data.adress">
+          <p routerLink="/folder/{{ item[1] }}">{{ item[0] }}</p>
+          <i class="material-icons">chevron_right</i>
+        </h2>
+      </div>
+      <div class="button-display">
+        <button><i class="material-icons" (click)="showList()">menu</i></button>
+        <button>
+          <i class="material-icons" (click)="showGrid()">grid_view</i>
+        </button>
+      </div>
     </div>
 
-    <div
-      class="folder"
-      *ngFor="let item of data.files"
-      (click)="openfile(item.file)"
-      #files
-    >
-      <i class="material-icons">picture_as_pdf </i>
-      <h1>{{ item.name }}</h1>
-      <p-contextMenu
-        [target]="files"
-        [model]="contextMenuItemsFiles"
-        (click)="handleMenuClick($event, item.id)"
-        (onShow)="showContextMenu(item.name, item.id)"
-      ></p-contextMenu>
+    <div class="main">
+      <div *ngIf="this.show_grid == true">
+        <div
+          class="folder"
+          *ngFor="let item of data.folders"
+          routerLink="/folder/{{ item.id }}"
+          #folders
+        >
+          <span>
+            <i class="material-icons">folder</i>
+            <h1>{{ item.name }}</h1>
+          </span>
+          <p-contextMenu
+            [target]="folders"
+            [model]="contextMenuItemsFolders"
+            (click)="handleMenuClick($event, item.id)"
+            (onShow)="showContextMenu(item.name, item.id)"
+          ></p-contextMenu>
+        </div>
+
+        <div
+          class="folder"
+          *ngFor="let item of data.files"
+          (click)="openfile(item.file)"
+          #files
+        >
+          <i class="material-icons">picture_as_pdf </i>
+          <h1>{{ item.name }}</h1>
+          <p-contextMenu
+            [target]="files"
+            [model]="contextMenuItemsFiles"
+            (click)="handleMenuClick($event, item.id)"
+            (onShow)="showContextMenu(item.name, item.id)"
+          ></p-contextMenu>
+        </div>
+      </div>
+
+      <table *ngIf="this.show_grid == false">
+        <thead *ngIf="!(data.files.length == 0 && data.folders.length == 0)">
+          <tr>
+            <th></th>
+            <th style="width: 350px">Name</th>
+            <th style="width: 150px">created at</th>
+            <th style="width: 150px">Last modifid</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of data.folders"
+            class="table"
+            routerLink="/folder/{{ item.id }}"
+          >
+            <td><i class="material-icons">folder</i></td>
+            <td>{{ item.name }}</td>
+            <td>{{ separateDateTime(item.created_at) }}</td>
+            <td>{{ separateDateTime(item.updated_at) }}</td>
+          </tr>
+          <tr
+            *ngFor="let item of data.files"
+            class="table"
+            routerLink="/folder/{{ item.id }}"
+          >
+            <td><i class="material-icons">picture_as_pdf</i></td>
+            <td>{{ item.name }}</td>
+            <td>{{ separateDateTime(item.created_at) }}</td>
+            <td>{{ separateDateTime(item.updated_at) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="empty-image">
+        <img
+          src="/assets/images/empty-folder.png"
+          alt="image"
+          *ngIf="data.files.length == 0 && data.folders.length == 0"
+        />
+      </div>
     </div>
   </div>
-
-  <table *ngIf="this.show_grid == false">
-    <thead *ngIf="!(data.files.length == 0 && data.folders.length == 0)">
-      <tr>
-        <th></th>
-        <th style="width: 350px">Name</th>
-        <th style="width: 150px">created at</th>
-        <th style="width: 150px">Last modifid</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let item of data.folders"
-        class="table"
-        routerLink="/folder/{{ item.id }}"
-      >
-        <td><i class="material-icons">folder</i></td>
-        <td>{{ item.name }}</td>
-        <td>{{ separateDateTime(item.created_at) }}</td>
-        <td>{{ separateDateTime(item.updated_at) }}</td>
-      </tr>
-      <tr
-        *ngFor="let item of data.files"
-        class="table"
-        routerLink="/folder/{{ item.id }}"
-      >
-        <td><i class="material-icons">picture_as_pdf</i></td>
-        <td>{{ item.name }}</td>
-        <td>{{ separateDateTime(item.created_at) }}</td>
-        <td>{{ separateDateTime(item.updated_at) }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="empty-image">
-    <img
-      src="/assets/images/empty-folder.png"
-      alt="image"
-      *ngIf="data.files.length == 0 && data.folders.length == 0"
-    />
+  <div class="right-div">
+    <app-navigation-pane
+      [items]="this.tree"
+      [first]="true"
+    ></app-navigation-pane>
   </div>
 </div>
 

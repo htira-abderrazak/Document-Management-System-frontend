@@ -1,1 +1,39 @@
-<p>navigation-pane works!</p>
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+<ul [class.my-div]="true" [class.first]="first">
+  <li *ngFor="let item of items">
+    <div class="item-container">
+      <i
+        class="material-icons"
+        (click)="toggleVisibility(item)"
+        *ngIf="!item.showChildren"
+      >
+        arrow_right
+      </i>
+      <i
+        class="material-icons"
+        (click)="toggleVisibility(item)"
+        *ngIf="item.showChildren"
+      >
+        arrow_drop_down
+      </i>
+
+      <div class="item-container">
+        <i class="material-icons doss">folder</i>
+        <span (click)="handleItemClick(item)">
+          <label>
+            {{ item.name }}
+          </label>
+        </span>
+      </div>
+    </div>
+    <app-navigation-pane
+      *ngIf="item.showChildren && item.content"
+      [items]="item.content.folders"
+      [first]="false"
+      (itemClick)="emitItemClick($event)"
+    ></app-navigation-pane>
+  </li>
+</ul>

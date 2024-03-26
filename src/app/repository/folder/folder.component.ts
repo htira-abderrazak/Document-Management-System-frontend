@@ -26,7 +26,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { PrimeNGConfig } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-
+import { NavigationPaneComponent } from '../navigation-pane/navigation-pane.component';
 @Component({
   selector: 'app-folder',
   standalone: true,
@@ -39,6 +39,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     ContextMenuModule,
     MenuModule,
     ReactiveFormsModule,
+    NavigationPaneComponent
   ],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.css',
@@ -60,7 +61,7 @@ export class FolderComponent implements OnInit {
   selectedid: any; //the id selected to edit file or folder
   @ViewChild('renameFolder') modalrenamefolder!: TemplateRef<any>;
   @ViewChild('renameFile') modalrenamefile!: TemplateRef<any>;
-
+  tree: any;
   constructor(
     private directoryserverce: DirectorysericeService,
     private activatedRoute: ActivatedRoute,
@@ -112,6 +113,9 @@ export class FolderComponent implements OnInit {
         });
       this.local.set('folder', this.id);
     });
+    this.directoryserverce.GetnavigationPane().subscribe((data: any) => {
+      this.tree =data
+    })
   }
 
   handleMenuClick(event: MouseEvent, id: string): void {

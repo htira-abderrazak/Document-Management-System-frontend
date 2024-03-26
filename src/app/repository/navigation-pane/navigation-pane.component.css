@@ -1,0 +1,34 @@
+ul {
+  list-style-type: none;
+}
+
+.item-container {
+  display: flex;
+  align-items: center;
+}
+span {
+  font-size: 14px;
+}
+.arrow-icon {
+  font-size: 20px; /* Adjust this value to set the size of the icon */
+  color: #000; /* Adjust this value to set the color of the icon */
+  vertical-align: middle; /* Add this line to align the icon vertically with the name */
+}
+
+.item-name {
+  font-size: 16px; /* Adjust this value to set the size of the item name */
+  color: #333; /* Adjust this value to set the color of the item name */
+  /* Add any other necessary styles for the item name */
+}
+.doss {
+  color: #607d8b;
+  font-size: 24px;
+}
+
+.my-div.first {
+  padding-left: 0;
+}
+
+i {
+  cursor: pointer;
+}

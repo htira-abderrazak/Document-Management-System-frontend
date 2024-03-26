@@ -45,4 +45,8 @@ export class DirectorysericeService {
   deleteFile(id: string) {
     return this.http.delete(this.API_URL+'/file/'+id+'/')
   }
+
+  GetnavigationPane() {
+    return this.http.get(this.API_URL+'/navigation-pane/')
+  }
 }

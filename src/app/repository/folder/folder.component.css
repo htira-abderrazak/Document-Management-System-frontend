@@ -1,7 +1,22 @@
 .main {
   padding: 20px 50px;
 }
+.mycontainer {
+  display: flex;
+  justify-content: space-between;
+}
+.right-div {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: 20px;
+  border-left: 6px solid green;
+  flex: 0 0 auto;
+}
 
+.left {
+  flex: 1;
+  margin-right: 20px;
+}
 .folder * {
   width: 100px;
 }
