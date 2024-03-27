@@ -232,7 +232,7 @@ export class FolderComponent implements OnInit {
       this.directoryserverce.deleteFile(id).subscribe(
         () => {
           alert('deleted successfully!');
-          this.data.folders.splice(
+          this.data.files.splice(
             this.data.files.findIndex((obj) => obj.id === id),
             1
           );
