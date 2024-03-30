@@ -4,5 +4,6 @@ export interface Files{
   directory: string,
   file: string,
   created_at: string,
-  updated_at:string
+  updated_at: string,
+  size : string
 }
