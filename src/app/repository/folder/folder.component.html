@@ -21,7 +21,7 @@
     </div>
 
     <div class="main">
-      <div *ngIf="this.show_grid == true">
+      <div *ngIf="this.show_grid == 'true'">
         <div
           class="folder"
           *ngFor="let item of data.folders"
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <table *ngIf="this.show_grid == false">
+      <table *ngIf="this.show_grid == 'false'">
         <thead *ngIf="!(data.files.length == 0 && data.folders.length == 0)">
           <tr>
             <th></th>

@@ -49,7 +49,7 @@ export class FolderComponent implements OnInit {
   data: Directory;
   id: any;
   API_URL = `${environment.apiUrl}`;
-  show_grid = true;
+  show_grid!: string;
   private modalRef: any;
   private modalService = inject(NgbModal);
   closeResult = '';
@@ -103,6 +103,10 @@ export class FolderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.local.get('show_grid') == null) {
+      this.local.set('show_grid', "true" );
+    }
+    this.show_grid = this.local.get('show_grid');
     this.primengConfig.ripple = true;
 
     this.activatedRoute.paramMap.subscribe((paramId) => {
@@ -196,10 +200,12 @@ export class FolderComponent implements OnInit {
 
   //show folders and  files in grid or liste
   showGrid() {
-    this.show_grid = true;
+    this.show_grid = "true";
+    this.local.set('show_grid', "true");
   }
   showList() {
-    this.show_grid = false;
+    this.show_grid = "false";
+    this.local.set('show_grid', "false");
   }
 
   //delete folder
