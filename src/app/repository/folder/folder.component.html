@@ -78,7 +78,21 @@
             <td>{{ separateDateTime(item.created_at) }}</td>
             <td>{{ separateDateTime(item.updated_at) }}</td>
             <td>...</td>
+            <td>
+              <i
+                class="material-icons"
+                (click)="showContextMenubyleftClick($event)"
+                >more_vert</i
+              >
+            </td>
+            <p-contextMenu
+              #contextMenu
+              [model]="contextMenuItemsFolders"
+              (click)="handleMenuClick($event, item.id)"
+              (onShow)="showContextMenu(item.name, item.id)"
+            ></p-contextMenu>
           </tr>
+
           <tr
             *ngFor="let item of data.files"
             class="table"
@@ -89,6 +103,19 @@
             <td>{{ separateDateTime(item.created_at) }}</td>
             <td>{{ separateDateTime(item.updated_at) }}</td>
             <td>{{ item.size }} Ko</td>
+            <td>
+              <i
+                class="material-icons more"
+                (click)="showContextMenubyleftClick($event)"
+                >more_vert</i
+              >
+            </td>
+            <p-contextMenu
+              #contextMenu
+              [model]="contextMenuItemsFolders"
+              (click)="handleMenuClick($event, item.id)"
+              (onShow)="showContextMenu(item.name, item.id)"
+            ></p-contextMenu>
           </tr>
         </tbody>
       </table>

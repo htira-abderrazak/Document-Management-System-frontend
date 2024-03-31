@@ -22,7 +22,7 @@ import {
   NgbModal,
   NgbDropdownModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { ContextMenuModule } from 'primeng/contextmenu';
+import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { PrimeNGConfig } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -39,12 +39,13 @@ import { NavigationPaneComponent } from '../navigation-pane/navigation-pane.comp
     ContextMenuModule,
     MenuModule,
     ReactiveFormsModule,
-    NavigationPaneComponent
+    NavigationPaneComponent,
   ],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.css',
 })
 export class FolderComponent implements OnInit {
+  @ViewChild('contextMenu') contextMenu!: ContextMenu;
   data: Directory;
   id: any;
   API_URL = `${environment.apiUrl}`;
@@ -114,8 +115,8 @@ export class FolderComponent implements OnInit {
       this.local.set('folder', this.id);
     });
     this.directoryserverce.GetnavigationPane().subscribe((data: any) => {
-      this.tree =data
-    })
+      this.tree = data;
+    });
   }
 
   handleMenuClick(event: MouseEvent, id: string): void {
@@ -243,5 +244,8 @@ export class FolderComponent implements OnInit {
         }
       );
     }
+  }
+  showContextMenubyleftClick(event: MouseEvent) {
+    this.contextMenu.show(event); // Show the context menu at the click event coordinatese
   }
 }

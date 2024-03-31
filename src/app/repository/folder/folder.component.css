@@ -138,12 +138,6 @@ h2 p:hover {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.table:hover {
-  background-color: #edf1fa;
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-}
-
 .empty-image {
   display: flex;
   justify-content: center;
