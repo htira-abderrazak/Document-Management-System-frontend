@@ -32,12 +32,12 @@ input.search {
   background-color: #e9eef6;
 }
 
-i.search {
+button .search {
   position: absolute;
   cursor: pointer;
   color: #666;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: -10px;
 }
 
 input:focus {
@@ -117,4 +117,16 @@ button.add-buttom:hover {
 
 .file-upload p {
   margin-top: 10px;
+}
+
+/* buttom search css */
+
+.search-btn {
+  position: absolute;
+  margin-left: -40px;
+  margin-top: 5px;
+  background-color: transparent;
+  border-radius: 100%;
+  border: none;
+  padding-top: 5px;
 }

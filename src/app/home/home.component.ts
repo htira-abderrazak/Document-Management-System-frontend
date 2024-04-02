@@ -1,16 +1,20 @@
 import { Component, inject, TemplateRef } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
+
 import {
   ModalDismissReasons,
   NgbModal,
-  NgbDropdownModule
+  NgbDropdownModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+
 import { FolderComponent } from '../repository/folder/folder.component';
-import { CommonModule } from '@angular/common';
 import { MyDiskComponent } from '../repository/my-disk/my-disk.component';
 import { DirectorysericeService } from '../repository/directoryserice.service';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
 import { LocalStorageService } from 'angular-web-storage';
+
 import { timer, fromEvent } from 'rxjs';
 import { takeUntil, mergeMap, tap } from 'rxjs/operators';
 @Component({
@@ -24,6 +28,7 @@ import { takeUntil, mergeMap, tap } from 'rxjs/operators';
     MyDiskComponent,
     NgbDropdownModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -35,6 +40,7 @@ export class HomeComponent {
   closeResult = '';
   error = '';
   name = new FormControl('');
+  search_name = new FormControl('');
   constructor(
     private router: Router,
     private directoryService: DirectorysericeService,
@@ -88,7 +94,7 @@ export class HomeComponent {
     if (myDiv) {
       myDiv.style.display = 'none';
     }
-    this.resetDiv()
+    this.resetDiv();
   }
   showWindow() {
     const myDiv = document.getElementById('myDiv') as HTMLElement;
@@ -199,5 +205,8 @@ export class HomeComponent {
         });
     }
     this.resetDiv();
+  }
+
+  submit(event: Event) {
   }
 }
