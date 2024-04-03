@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { environment } from '../../environments/environment';
-import { retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,14 +9,16 @@ import { retry } from 'rxjs';
 export class DirectorysericeService {
   private API_URL = `${environment.apiUrl}`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getRootFolders() {
     return this.http.get(this.API_URL + '/root-folders/');
   }
+
   getFolderContent(id: any) {
     return this.http.get(this.API_URL + '/folder-content/' + id + '/');
   }
+
   createFolder(name: string, parent: any) {
     const body = {
       name: name,
@@ -24,9 +26,11 @@ export class DirectorysericeService {
     };
     return this.http.post(this.API_URL + '/folder/', body);
   }
+
   createFile(data: FormData) {
     return this.http.post(this.API_URL + '/file/', data);
   }
+
   renameFolder(name: string, id: string) {
     const body = {
       name: name,
@@ -43,10 +47,15 @@ export class DirectorysericeService {
   }
 
   deleteFile(id: string) {
-    return this.http.delete(this.API_URL+'/file/'+id+'/')
+    return this.http.delete(this.API_URL + '/file/' + id + '/')
   }
 
   GetnavigationPane() {
-    return this.http.get(this.API_URL+'/navigation-pane/')
+    return this.http.get(this.API_URL + '/navigation-pane/')
   }
+
+  search(name: string) {
+    return this.http.get(this.API_URL + '/search/' + name + '/')
+  }
+
 }

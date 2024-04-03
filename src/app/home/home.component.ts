@@ -208,5 +208,6 @@ export class HomeComponent {
   }
 
   submit(event: Event) {
+    this.router.navigate(['/search/', this.search_name.value]);
   }
 }

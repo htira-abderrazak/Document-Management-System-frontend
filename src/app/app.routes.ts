@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
-import path from 'path';
-import { AppComponent } from './app.component';
-import { FolderComponent } from './repository/folder/folder.component';
+
 import { HomeComponent } from './home/home.component';
+import { FolderComponent } from './repository/folder/folder.component';
 import { MyDiskComponent } from './repository/my-disk/my-disk.component';
-import { NavigationPaneComponent } from './repository/navigation-pane/navigation-pane.component';
+import { SearchComponent } from './repository/search/search.component';
 
 export const routes: Routes = [
   {
@@ -15,9 +13,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'mydrive', pathMatch: 'full' },
       { path: 'folder/:id', component: FolderComponent },
       { path: 'mydrive', component: MyDiskComponent },
+      { path: 'search/:name', component : SearchComponent}
     ],
   },
-{  path :'pane', component : NavigationPaneComponent,
-}
 
 ];
