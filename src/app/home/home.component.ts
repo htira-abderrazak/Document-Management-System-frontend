@@ -1,7 +1,12 @@
 import { Component, inject, TemplateRef } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 
 import {
   ModalDismissReasons,
@@ -41,22 +46,31 @@ export class HomeComponent {
   error = '';
   name = new FormControl('');
   search_name = new FormControl('');
+  isActiveRoute: boolean = false;
   constructor(
     private router: Router,
     private directoryService: DirectorysericeService,
-    private local: LocalStorageService
+    private local: LocalStorageService,
+    private activatedRoute: ActivatedRoute
   ) {}
   open(content: TemplateRef<any>) {
-    this.modalRef = this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    const childRoute = this.activatedRoute.firstChild;
+    //open modal to crate folder only when the route is "drive" of "folder"
+    if (
+      childRoute!.snapshot.url[0].path == 'folder' ||
+      childRoute!.snapshot.url[0].path == 'drive'
+    ) {
+      this.modalRef = this.modalService
+        .open(content, { ariaLabelledBy: 'modal-basic-title' })
+        .result.then(
+          (result) => {
+            this.closeResult = `Closed with: ${result}`;
+          },
+          (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          }
+        );
+    }
   }
 
   private getDismissReason(reason: any): string {
@@ -176,35 +190,42 @@ export class HomeComponent {
     }
   }
   onFileChange(event: any) {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      this.showWindow(); // Show the div immediately
+    const childRoute = this.activatedRoute.firstChild;
+    //crate file only when the route is "drive" of "folder"
+    if (
+      childRoute!.snapshot.url[0].path == 'folder' ||
+      childRoute!.snapshot.url[0].path == 'drive'
+    ) {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        this.showWindow(); // Show the div immediately
 
-      const uploadData = new FormData();
-      uploadData.append('file', files[0]);
-      uploadData.append('name', files[0].name);
-      uploadData.append('directory', this.local.get('folder'));
+        const uploadData = new FormData();
+        uploadData.append('file', files[0]);
+        uploadData.append('name', files[0].name);
+        uploadData.append('directory', this.local.get('folder'));
 
-      this.directoryService
-        .createFile(uploadData)
-        .pipe(
-          // Show success message after complete:
-          tap(() => {
-            this.showSuccessMessage();
-            this.reloadChild();
-          }),
-          // Close the div after 3 seconds:
-          mergeMap(() => timer(3000)),
-          takeUntil(fromEvent(document, 'click'))
-        )
-        .subscribe({
-          error: (error) => {
-            if (error.status == '400') this.showrrorNamemessage();
-            else this.showerrormessage();
-          },
-        });
+        this.directoryService
+          .createFile(uploadData)
+          .pipe(
+            // Show success message after complete:
+            tap(() => {
+              this.showSuccessMessage();
+              this.reloadChild();
+            }),
+            // Close the div after 3 seconds:
+            mergeMap(() => timer(3000)),
+            takeUntil(fromEvent(document, 'click'))
+          )
+          .subscribe({
+            error: (error) => {
+              if (error.status == '400') this.showrrorNamemessage();
+              else this.showerrormessage();
+            },
+          });
+      }
+      this.resetDiv();
     }
-    this.resetDiv();
   }
 
   submit(event: Event) {
