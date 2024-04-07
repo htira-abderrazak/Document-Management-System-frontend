@@ -31,7 +31,6 @@ export class SearchComponent implements OnInit {
         this.data = data;
       });
     });
-    console.log(this.data);
   }
 
   separateDateTime(time: any) {
