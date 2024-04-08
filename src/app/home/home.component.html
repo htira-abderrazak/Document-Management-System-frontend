@@ -11,8 +11,15 @@
   <div class="col-sm-10 input-container">
     <div class="search-wrapper">
       <form (ngSubmit)="submit($event)">
-        <input type="text" placeholder="Search" class="search" [formControl]="search_name" />
-        <button type="submit" class="search-btn" ><i class="material-icons">search</i></button>
+        <input
+          type="text"
+          placeholder="Search"
+          class="search"
+          [formControl]="search_name"
+        />
+        <button type="submit" class="search-btn">
+          <i class="material-icons">search</i>
+        </button>
       </form>
     </div>
   </div>
@@ -63,7 +70,7 @@
       <i class="material-icons sidebar-icon">schedule</i>
       Recent
     </button>
-    <button class="main-buttoms">
+    <button class="main-buttoms" routerLink="./trash">
       <i class="material-icons sidebar-icon">delete</i>
       Trash
     </button>

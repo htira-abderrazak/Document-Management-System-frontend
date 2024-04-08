@@ -1,0 +1,39 @@
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
+<div class="main">
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th style="width: 350px">Name</th>
+        <th style="width: 150px">created at</th>
+        <th style="width: 150px">Last modifid</th>
+        <th style="width: 150px">size</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let item of data[0]"
+        class="table"
+      >
+        <td><i class="material-icons">folder</i></td>
+        <td>{{ item.name }}</td>
+        <td>{{ separateDateTime(item.created_at) }}</td>
+        <td>{{ separateDateTime(item.updated_at) }}</td>
+        <td>...</td>
+      </tr>
+
+      <tr *ngFor="let item of data[1]" class="table">
+        <td><i class="material-icons">picture_as_pdf</i></td>
+        <td>{{ item.name }}</td>
+        <td>{{ separateDateTime(item.created_at) }}</td>
+        <td>{{ separateDateTime(item.updated_at) }}</td>
+        <td>{{ item.size }} Ko</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>

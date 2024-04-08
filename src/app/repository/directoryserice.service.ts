@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 export class DirectorysericeService {
   private API_URL = `${environment.apiUrl}`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getRootFolders() {
     return this.http.get(this.API_URL + '/root-folders/');
@@ -47,15 +47,18 @@ export class DirectorysericeService {
   }
 
   deleteFile(id: string) {
-    return this.http.delete(this.API_URL + '/file/' + id + '/')
+    return this.http.delete(this.API_URL + '/file/' + id + '/');
   }
 
   GetnavigationPane() {
-    return this.http.get(this.API_URL + '/navigation-pane/')
+    return this.http.get(this.API_URL + '/navigation-pane/');
   }
 
   search(name: string) {
-    return this.http.get(this.API_URL + '/search/' + name + '/')
+    return this.http.get(this.API_URL + '/search/' + name + '/');
   }
 
+  getTrash() {
+    return this.http.get(this.API_URL + '/trash/');
+  }
 }
