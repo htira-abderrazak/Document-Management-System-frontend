@@ -61,4 +61,21 @@ export class DirectorysericeService {
   getTrash() {
     return this.http.get(this.API_URL + '/trash/');
   }
+  getFavorite() {
+    return this.http.get(this.API_URL + '/favorite/');
+
+  }
+  addFoldertofavorite(id: string) {
+    const body = {
+      favorite: true,
+    };
+    return this.http.put(this.API_URL + '/folder/' + id + '/', body);
+  }
+
+  addFilertofavorite(id: string) {
+    const body = {
+      favorite: true,
+    };
+    return this.http.put(this.API_URL + '/file/' + id + '/', body);
+  }
 }

@@ -5,6 +5,7 @@ import { FolderComponent } from './repository/folder/folder.component';
 import { MyDiskComponent } from './repository/my-disk/my-disk.component';
 import { SearchComponent } from './repository/search/search.component';
 import { TrashComponent } from './repository/trash/trash.component';
+import { FavoriteComponent } from './repository/favorite/favorite.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,7 @@ export const routes: Routes = [
       { path: 'mydrive', component: MyDiskComponent },
       { path: 'search/:name', component: SearchComponent },
       { path: 'trash', component: TrashComponent },
+      { path: 'favorite', component: FavoriteComponent },
     ],
   },
 ];

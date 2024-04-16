@@ -87,6 +87,10 @@ export class FolderComponent implements OnInit {
           this.deleteFolder(this.selectedname, this.selectedid);
         },
       },
+      {
+        label: 'favorite',
+        command: () => this.addFolderToFavorite(this.selectedid),
+      },
     ];
     this.contextMenuItemsFiles = [
       {
@@ -99,12 +103,16 @@ export class FolderComponent implements OnInit {
           this.deleteFile(this.selectedname, this.selectedid);
         },
       },
+      {
+        label: 'favorite',
+        command: () => this.addFileToFavorite(this.selectedid),
+      },
     ];
   }
 
   ngOnInit(): void {
     if (this.local.get('show_grid') == null) {
-      this.local.set('show_grid', "true" );
+      this.local.set('show_grid', 'true');
     }
     this.show_grid = this.local.get('show_grid');
     this.primengConfig.ripple = true;
@@ -200,12 +208,12 @@ export class FolderComponent implements OnInit {
 
   //show folders and  files in grid or liste
   showGrid() {
-    this.show_grid = "true";
-    this.local.set('show_grid', "true");
+    this.show_grid = 'true';
+    this.local.set('show_grid', 'true');
   }
   showList() {
-    this.show_grid = "false";
-    this.local.set('show_grid', "false");
+    this.show_grid = 'false';
+    this.local.set('show_grid', 'false');
   }
 
   //delete folder
@@ -253,5 +261,27 @@ export class FolderComponent implements OnInit {
   }
   showContextMenubyleftClick(event: MouseEvent) {
     this.contextMenu.show(event); // Show the context menu at the click event coordinatese
+  }
+
+  addFileToFavorite(id: string) {
+    this.directoryserverce.addFilertofavorite(id).subscribe(
+      () => {
+        alert('added successfully!');
+      },
+      (error) => {
+        alert('error!');
+      }
+    );
+  }
+
+  addFolderToFavorite(id: string) {
+    this.directoryserverce.addFoldertofavorite(id).subscribe(
+      () => {
+        alert('added successfully!');
+      },
+      (error) => {
+        alert('error!');
+      }
+    );
   }
 }
