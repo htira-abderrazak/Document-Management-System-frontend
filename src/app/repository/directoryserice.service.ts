@@ -78,4 +78,8 @@ export class DirectorysericeService {
     };
     return this.http.put(this.API_URL + '/file/' + id + '/', body);
   }
+
+  getRecent() {
+    return this.http.get(this.API_URL + '/recent/');
+  }
 }
