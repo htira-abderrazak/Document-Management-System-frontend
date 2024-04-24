@@ -96,7 +96,7 @@
           <tr
             *ngFor="let item of data.files"
             class="table"
-            routerLink="/folder/{{ item.id }}"
+            (click)="openfile(item.file)"
           >
             <td><i class="material-icons">picture_as_pdf</i></td>
             <td>{{ item.name }}</td>
