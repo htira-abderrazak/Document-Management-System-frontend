@@ -82,4 +82,8 @@ export class DirectorysericeService {
   getRecent() {
     return this.http.get(this.API_URL + '/recent/');
   }
+
+  getTotalSize() {
+    return this.http.get(this.API_URL + '/get-total-size/');
+  }
 }

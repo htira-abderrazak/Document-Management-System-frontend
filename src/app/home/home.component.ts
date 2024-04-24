@@ -22,6 +22,9 @@ import { LocalStorageService } from 'angular-web-storage';
 
 import { timer, fromEvent } from 'rxjs';
 import { takeUntil, mergeMap, tap } from 'rxjs/operators';
+
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -34,6 +37,7 @@ import { takeUntil, mergeMap, tap } from 'rxjs/operators';
     NgbDropdownModule,
     ReactiveFormsModule,
     FormsModule,
+    NgbProgressbarModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -47,12 +51,20 @@ export class HomeComponent {
   name = new FormControl('');
   search_name = new FormControl('');
   isActiveRoute: boolean = false;
+
+  size: number = 0;
   constructor(
     private router: Router,
     private directoryService: DirectorysericeService,
     private local: LocalStorageService,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
+
+  ngOnInit(){
+    this.directoryService.getTotalSize().subscribe((data:any) => {
+      this.size = data
+    })
+  }
   open(content: TemplateRef<any>) {
     const childRoute = this.activatedRoute.firstChild;
     //open modal to crate folder only when the route is "drive" of "folder"
