@@ -46,7 +46,7 @@
           (click)="openfile(item.file)"
           #files
         >
-          <i class="material-icons">picture_as_pdf </i>
+          <i class="material-icons">description</i>
           <h1>{{ item.name }}</h1>
           <p-contextMenu
             [target]="files"
@@ -98,7 +98,7 @@
             class="table"
             (click)="openfile(item.file)"
           >
-            <td><i class="material-icons">picture_as_pdf</i></td>
+            <td><i class="material-icons">description</i></td>
             <td>{{ item.name }}</td>
             <td>{{ separateDateTime(item.created_at) }}</td>
             <td>{{ separateDateTime(item.updated_at) }}</td>
