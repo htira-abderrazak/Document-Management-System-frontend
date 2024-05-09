@@ -81,12 +81,12 @@
             <td>
               <i
                 class="material-icons"
-                (click)="showContextMenubyleftClick($event)"
+                (click)="showContextMenubyleftClickfolders($event)"
                 >more_vert</i
               >
             </td>
             <p-contextMenu
-              #contextMenu
+              #contextMenufolders
               [model]="contextMenuItemsFolders"
               (click)="handleMenuClick($event, item.id)"
               (onShow)="showContextMenu(item.name, item.id)"
@@ -106,12 +106,12 @@
             <td>
               <i
                 class="material-icons more"
-                (click)="showContextMenubyleftClick($event)"
+                (click)="showContextMenubyleftClickfiles($event)"
                 >more_vert</i
               >
             </td>
             <p-contextMenu
-              #contextMenu
+              #contextMenufiles
               [model]="contextMenuItemsFiles"
               (click)="handleMenuClick($event, item.id)"
               (onShow)="showContextMenu(item.name, item.id)"

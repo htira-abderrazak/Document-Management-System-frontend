@@ -45,7 +45,9 @@ import { NavigationPaneComponent } from '../navigation-pane/navigation-pane.comp
   styleUrl: './folder.component.css',
 })
 export class FolderComponent implements OnInit {
-  @ViewChild('contextMenu') contextMenu!: ContextMenu;
+  @ViewChild('contextMenufolders') contextMenufolders!: ContextMenu;
+  @ViewChild('contextMenufiles') contextMenufiles!: ContextMenu;
+
   data: Directory;
   id: any;
   API_URL = `${environment.apiUrl}`;
@@ -259,10 +261,12 @@ export class FolderComponent implements OnInit {
       );
     }
   }
-  showContextMenubyleftClick(event: MouseEvent) {
-    this.contextMenu.show(event); // Show the context menu at the click event coordinatese
+  showContextMenubyleftClickfolders(event: MouseEvent) {
+    this.contextMenufolders.show(event); // Show the context menu at the click event coordinatese
   }
-
+  showContextMenubyleftClickfiles(event: MouseEvent) {
+    this.contextMenufiles.show(event); // Show the context menu at the click event coordinatese
+  }
   addFileToFavorite(id: string) {
     this.directoryserverce.addFilertofavorite(id).subscribe(
       () => {
