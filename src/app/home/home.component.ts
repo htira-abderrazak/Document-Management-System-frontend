@@ -37,7 +37,7 @@ import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
     NgbDropdownModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbProgressbarModule
+    NgbProgressbarModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -58,19 +58,19 @@ export class HomeComponent {
     private directoryService: DirectorysericeService,
     private local: LocalStorageService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
-  ngOnInit(){
-    this.directoryService.getTotalSize().subscribe((data:any) => {
-      this.size = data
-    })
+  ngOnInit() {
+    this.directoryService.getTotalSize().subscribe((data: any) => {
+      this.size = data;
+    });
   }
   open(content: TemplateRef<any>) {
     const childRoute = this.activatedRoute.firstChild;
     //open modal to crate folder only when the route is "drive" of "folder"
     if (
       childRoute!.snapshot.url[0].path == 'folder' ||
-      childRoute!.snapshot.url[0].path == 'drive'
+      childRoute!.snapshot.url[0].path == 'mydrive'
     ) {
       this.modalRef = this.modalService
         .open(content, { ariaLabelledBy: 'modal-basic-title' })
