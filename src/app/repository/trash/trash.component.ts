@@ -10,14 +10,17 @@ import { CommonModule } from '@angular/common';
   styleUrl: './trash.component.css',
 })
 export class TrashComponent implements OnInit {
-
   data = [];
-  constructor(private directoryservice: DirectorysericeService) { }
+  isLoading = true;
+  dataempty = false;
+  constructor(private directoryservice: DirectorysericeService) {}
 
   ngOnInit(): void {
-      this.directoryservice.getTrash().subscribe((data: any) => {
-        this.data = data;
-      });
+    this.directoryservice.getTrash().subscribe((data: any) => {
+      this.data = data;
+      this.isLoading = false;
+      this.dataempty = this.directoryservice.isArrayEmptyEvery(data)
+    });
   }
   separateDateTime(time: any) {
     const dateTime = new Date(time);
@@ -28,4 +31,5 @@ export class TrashComponent implements OnInit {
 
     return `${day}/${month}/${year} ${hour}:00`;
   }
+
 }

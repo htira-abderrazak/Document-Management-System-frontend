@@ -6,8 +6,11 @@
 
 <h4>All the folders and files will be deleted one day after being moved to the trash.</h4>
 <div class="main">
-  <table>
-    <thead>
+  <div *ngIf="isLoading" class="spinner-border m-1 spinner" role="status" id="spinner">
+    <span class="sr-only"></span>
+  </div>
+  <table *ngIf="!isLoading">
+    <thead *ngIf="!dataempty" >
       <tr>
         <th></th>
         <th style="width: 350px">Name</th>
@@ -37,6 +40,13 @@
       </tr>
     </tbody>
   </table>
-
+  <div class="empty-image">
+    <img
+      src="/assets/images/trash-empty.png"
+      alt="image"
+      *ngIf="dataempty &&  !isLoading"
+    />
+  </div>
 
 </div>
+
