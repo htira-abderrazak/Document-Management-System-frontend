@@ -12,11 +12,15 @@ import { DirectorysericeService } from '../directoryserice.service';
 })
 export class RecentComponent {
   data = [];
+  isLoading = true;
+  dataempty = false;
   constructor(private directoryservice: DirectorysericeService) {}
 
   ngOnInit(): void {
     this.directoryservice.getRecent().subscribe((data: any) => {
       this.data = data;
+      this.isLoading = false;
+      this.dataempty = this.directoryservice.isArrayEmptyEvery(data)
     });
   }
   separateDateTime(time: any) {

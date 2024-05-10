@@ -4,37 +4,50 @@
 />
 <h2>Recent</h2>
 <div class="main">
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th style="width: 350px">Name</th>
-        <th style="width: 150px">created at</th>
-        <th style="width: 150px">Last modifid</th>
-        <th style="width: 150px">size</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let item of data[0]"
-        class="table"
-      >
-        <td><i class="material-icons">folder</i></td>
-        <td>{{ item.name }}</td>
-        <td>{{ separateDateTime(item.created_at) }}</td>
-        <td>{{ separateDateTime(item.updated_at) }}</td>
-        <td>...</td>
-      </tr>
+  <div class="main">
+    <div
+      *ngIf="isLoading"
+      class="spinner-border m-1 spinner"
+      role="status"
+      id="spinner"
+    >
+      <span class="sr-only"></span>
+    </div>
+    <table *ngIf="!isLoading">
+      <thead *ngIf="!dataempty">
+        <tr>
+          <th></th>
+          <th style="width: 350px">Name</th>
+          <th style="width: 150px">created at</th>
+          <th style="width: 150px">Last modifid</th>
+          <th style="width: 150px">size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data[0]" class="table">
+          <td><i class="material-icons">folder</i></td>
+          <td>{{ item.name }}</td>
+          <td>{{ separateDateTime(item.created_at) }}</td>
+          <td>{{ separateDateTime(item.updated_at) }}</td>
+          <td>...</td>
+        </tr>
 
-      <tr *ngFor="let item of data[1]" class="table">
-        <td><i class="material-icons">description</i></td>
-        <td>{{ item.name }}</td>
-        <td>{{ separateDateTime(item.created_at) }}</td>
-        <td>{{ separateDateTime(item.updated_at) }}</td>
-        <td>{{ item.size }} Ko</td>
-      </tr>
-    </tbody>
-  </table>
+        <tr *ngFor="let item of data[1]" class="table">
+          <td><i class="material-icons">description</i></td>
+          <td>{{ item.name }}</td>
+          <td>{{ separateDateTime(item.created_at) }}</td>
+          <td>{{ separateDateTime(item.updated_at) }}</td>
+          <td>{{ item.size }} Ko</td>
+        </tr>
+      </tbody>
+    </table>
 
-
+    <div class="empty-image">
+      <img
+        src="/assets/images/empty-folder.png"
+        alt="image"
+        *ngIf="dataempty &&  !isLoading"
+      />
+    </div>
+  </div>
 </div>
