@@ -12,9 +12,12 @@ import { LocalStorageService } from 'angular-web-storage';
   styleUrl: './my-disk.component.css',
 })
 export class MyDiskComponent implements OnInit {
-  @Input() reloadRequested: boolean = false;
 
   folders: any;
+
+  isLoading = true;
+  dataempty = false;
+
   constructor(
     private directoryservice: DirectorysericeService,
     private local: LocalStorageService
@@ -22,6 +25,8 @@ export class MyDiskComponent implements OnInit {
   ngOnInit(): void {
     this.directoryservice.getRootFolders().subscribe((data: any) => {
       this.folders = data;
+      this.isLoading = false;
+      this.dataempty = this.directoryservice.isArrayEmptyEvery(data)
     });
     this.local.set('folder', '');
   }

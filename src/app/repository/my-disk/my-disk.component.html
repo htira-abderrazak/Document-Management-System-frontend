@@ -5,8 +5,16 @@
 <h2>My Drive</h2>
 
 <div>
-  <table>
-    <thead>
+  <div
+  *ngIf="isLoading"
+  class="spinner-border m-1 spinner"
+  role="status"
+  id="spinner"
+>
+  <span class="sr-only"></span>
+</div>
+  <table *ngIf="!isLoading">
+    <thead *ngIf="!dataempty">
       <tr>
         <th></th>
         <th style="width: 350px">Name</th>
@@ -27,4 +35,5 @@
       </tr>
     </tbody>
   </table>
+
 </div>
