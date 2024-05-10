@@ -27,6 +27,9 @@ import { PrimeNGConfig } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NavigationPaneComponent } from '../navigation-pane/navigation-pane.component';
+
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-folder',
   standalone: true,
@@ -48,6 +51,7 @@ export class FolderComponent implements OnInit {
   @ViewChild('contextMenufolders') contextMenufolders!: ContextMenu;
   @ViewChild('contextMenufiles') contextMenufiles!: ContextMenu;
 
+  private unsubscribe$ = new Subject<void>();
   data: Directory;
   id: any;
   API_URL = `${environment.apiUrl}`;
@@ -65,6 +69,8 @@ export class FolderComponent implements OnInit {
   @ViewChild('renameFolder') modalrenamefolder!: TemplateRef<any>;
   @ViewChild('renameFile') modalrenamefile!: TemplateRef<any>;
   tree: any;
+  isLoading = true;
+  dataempty = false;
   constructor(
     private directoryserverce: DirectorysericeService,
     private activatedRoute: ActivatedRoute,
@@ -119,20 +125,28 @@ export class FolderComponent implements OnInit {
     this.show_grid = this.local.get('show_grid');
     this.primengConfig.ripple = true;
 
-    this.activatedRoute.paramMap.subscribe((paramId) => {
-      this.id = paramId.get('id');
-      this.directoryserverce
-        .getFolderContent(this.id)
-        .subscribe((data: any) => {
-          this.data = data;
-        });
-      this.local.set('folder', this.id);
-    });
+    this.activatedRoute.paramMap
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((paramId) => {
+        this.isLoading = true;
+        this.id = paramId.get('id');
+        this.directoryserverce
+          .getFolderContent(this.id)
+          .subscribe((data: any) => {
+            this.data = data;
+            this.isLoading = false;
+            this.dataempty = this.directoryserverce.isArrayEmptyEvery(data);
+          });
+        this.local.set('folder', this.id);
+      });
     this.directoryserverce.GetnavigationPane().subscribe((data: any) => {
       this.tree = data;
     });
   }
-
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
   handleMenuClick(event: MouseEvent, id: string): void {
     event.preventDefault(); // Prevent the default behavior of routerLink
     event.stopPropagation(); // Stop event propagation to prevent navigating to the folder route
