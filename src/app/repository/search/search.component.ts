@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -6,7 +6,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { DirectorysericeService } from '../directoryserice.service';
 import { Directory } from '../directory';
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-search',
   standalone: true,
@@ -16,8 +17,10 @@ import { Directory } from '../directory';
 })
 export class SearchComponent implements OnInit {
   name: any;
-  data = [];
-
+  data : any;
+  isLoading = true;
+  dataempty = false;
+  private unsubscribe$ = new Subject<void>();
   constructor(
     private directoryservice: DirectorysericeService,
     private activatedRoute: ActivatedRoute
@@ -25,12 +28,24 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe((paramId) => {
-      this.name = paramId.get('name');
-      this.directoryservice.search(this.name).subscribe((data: any) => {
-        this.data = data;
+    this.activatedRoute.paramMap
+      .pipe(takeUntil(this.unsubscribe$)) // Unsubscribe when component is destroyed
+      .subscribe(paramId => {
+        this.isLoading = true; // Reset loading state on param change
+        this.name = paramId.get('name');
+
+        this.directoryservice.search(this.name)
+          .subscribe((data : any) => {
+            this.data = data;
+            this.isLoading = false;
+            this.dataempty = this.directoryservice.isArrayEmptyEvery(data);
+          });
       });
-    });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   separateDateTime(time: any) {
