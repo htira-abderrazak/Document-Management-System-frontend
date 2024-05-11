@@ -7,19 +7,33 @@
   class="btn btn-primary"
   type="button"
   [disabled]="isLoadingButton"
-  (click)="handleClick()">
+  (click)="handleClick()"
+>
   <span *ngIf="!isLoadingButton">{{ buttonText }}</span>
-  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isLoadingButton"></span>
+  <span
+    class="spinner-border spinner-border-sm"
+    role="status"
+    aria-hidden="true"
+    *ngIf="isLoadingButton"
+  ></span>
   <span class="sr-only" *ngIf="isLoadingButton">Loading...</span>
 </button>
 
-<h4>All the folders and files will be deleted one day after being moved to the trash.</h4>
+<h4>
+  All the folders and files will be deleted one day after being moved to the
+  trash.
+</h4>
 <div class="main">
-  <div *ngIf="isLoading" class="spinner-border m-1 spinner" role="status" id="spinner">
+  <div
+    *ngIf="isLoading"
+    class="spinner-border m-1 spinner"
+    role="status"
+    id="spinner"
+  >
     <span class="sr-only"></span>
   </div>
   <table *ngIf="!isLoading">
-    <thead *ngIf="!dataempty" >
+    <thead *ngIf="!dataempty">
       <tr>
         <th></th>
         <th style="width: 350px">Name</th>
@@ -29,15 +43,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr
-        *ngFor="let item of data[0]"
-        class="table"
-      >
+      <tr *ngFor="let item of data[0]" class="table">
         <td><i class="material-icons">folder</i></td>
         <td>{{ item.name }}</td>
         <td>{{ separateDateTime(item.created_at) }}</td>
         <td>{{ separateDateTime(item.updated_at) }}</td>
         <td>...</td>
+        <td><i class="material-icons restore" (click)="restorefolder(item.id)" >restore_from_trash</i></td>
       </tr>
 
       <tr *ngFor="let item of data[1]" class="table">
@@ -46,6 +58,8 @@
         <td>{{ separateDateTime(item.created_at) }}</td>
         <td>{{ separateDateTime(item.updated_at) }}</td>
         <td>{{ item.size }} Ko</td>
+        <td><i class="material-icons restore" (click)="restorefile(item.id)" >restore_from_trash</i></td>
+
       </tr>
     </tbody>
   </table>
@@ -53,9 +67,7 @@
     <img
       src="/assets/images/trash-empty.png"
       alt="image"
-      *ngIf="dataempty &&  !isLoading"
+      *ngIf="dataempty && !isLoading"
     />
   </div>
-
 </div>
-

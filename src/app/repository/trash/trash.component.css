@@ -16,3 +16,7 @@ img {
   opacity: 0.2;
   height: 500px;
 }
+
+.restore{
+  cursor: pointer;
+}

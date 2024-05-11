@@ -94,4 +94,11 @@ export class DirectorysericeService {
   isArrayEmptyEvery(arr: any[]): boolean {
     return arr.every(element => element.length === 0);
   }
+
+  restoreFile(id: string) {
+    return this.http.put(this.API_URL + '/restore-file/' + id + '/',{});
+  }
+  restoreFolder(id: string) {
+    return this.http.put(this.API_URL + '/restore-folder/' + id + '/',{});
+  }
 }

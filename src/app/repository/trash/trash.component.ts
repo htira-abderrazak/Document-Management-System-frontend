@@ -53,4 +53,32 @@ export class TrashComponent implements OnInit {
       }
     );
   }
+
+  restorefile(id: string) {
+    this.isLoading = true;
+    this.directoryservice.restoreFile(id).subscribe(
+      (response) => {
+        window.location.reload();
+      },
+      (error) => {
+        // Handle error
+        console.error(error);
+        alert('error!');
+      }
+    );
+  }
+
+  restorefolder(id: string) {
+    this.isLoading = true;
+    this.directoryservice.restoreFolder(id).subscribe(
+      (response) => {
+        window.location.reload();
+      },
+      (error) => {
+        // Handle error
+        console.error(error);
+        alert('error!');
+      }
+    );
+  }
 }
