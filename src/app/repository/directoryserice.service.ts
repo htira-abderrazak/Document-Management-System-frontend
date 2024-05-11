@@ -86,6 +86,10 @@ export class DirectorysericeService {
   getTotalSize() {
     return this.http.get(this.API_URL + '/get-total-size/');
   }
+
+  cleanTrash() {
+    return this.http.delete(this.API_URL + '/clean/');
+  }
   //return if the array of arrays is empty
   isArrayEmptyEvery(arr: any[]): boolean {
     return arr.every(element => element.length === 0);

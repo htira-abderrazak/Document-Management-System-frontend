@@ -13,13 +13,16 @@ export class TrashComponent implements OnInit {
   data = [];
   isLoading = true;
   dataempty = false;
+  buttonText = 'Clear Trash';
+  isLoadingButton = false;
+
   constructor(private directoryservice: DirectorysericeService) {}
 
   ngOnInit(): void {
     this.directoryservice.getTrash().subscribe((data: any) => {
       this.data = data;
       this.isLoading = false;
-      this.dataempty = this.directoryservice.isArrayEmptyEvery(data)
+      this.dataempty = this.directoryservice.isArrayEmptyEvery(data);
     });
   }
   separateDateTime(time: any) {
@@ -32,4 +35,22 @@ export class TrashComponent implements OnInit {
     return `${day}/${month}/${year} ${hour}:00`;
   }
 
+  handleClick() {
+    this.isLoadingButton = true; // Show loading indicator
+
+    // Replace with your actual request logic
+    this.directoryservice.cleanTrash().subscribe(
+      (response) => {
+        // Handle successful response
+        console.log(response);
+        window.location.reload();
+      },
+      (error) => {
+        // Handle error
+        console.error(error);
+        this.isLoadingButton = false;
+        alert('error!');
+      }
+    );
+  }
 }
