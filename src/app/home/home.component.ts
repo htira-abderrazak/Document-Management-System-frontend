@@ -224,6 +224,9 @@ export class HomeComponent {
             tap(() => {
               this.showSuccessMessage();
               this.reloadChild();
+              this.directoryService.getTotalSize().subscribe((data: any) => {
+                this.size = data;
+              });
             }),
             // Close the div after 3 seconds:
             mergeMap(() => timer(3000)),
