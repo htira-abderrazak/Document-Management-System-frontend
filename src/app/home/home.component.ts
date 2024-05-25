@@ -51,6 +51,7 @@ export class HomeComponent {
   name = new FormControl('');
   search_name = new FormControl('');
   isActiveRoute: boolean = false;
+  erroMessage = '';
 
   size: number = 0;
   constructor(
@@ -234,8 +235,10 @@ export class HomeComponent {
           )
           .subscribe({
             error: (error) => {
-              if (error.status == '400') this.showrrorNamemessage();
-              else this.showerrormessage();
+              if (error.status == '400') {
+                this.showrrorNamemessage();
+                this.erroMessage = this.getMessage(error.error)
+              } else this.showerrormessage();
             },
           });
       }
@@ -245,5 +248,9 @@ export class HomeComponent {
 
   submit(event: Event) {
     this.router.navigate(['/search/', this.search_name.value]);
+  }
+  getMessage(myObject: any): string {
+    const key = Object.keys(myObject)[0];
+    return myObject[key];
   }
 }
