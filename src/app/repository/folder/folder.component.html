@@ -4,9 +4,12 @@
 />
 
 <div class="mycontainer">
-  <div *ngIf="isLoading" class="spinner-border m-1 spinner" role="status" id="spinner">
-    <span class="sr-only"></span>
+  <div class="spinner" *ngIf="isLoading">
+    <div *ngIf="isLoading" class="spinner-border m-1" role="status" id="spinner">
+      <span class="sr-only"></span>
+    </div>
   </div>
+
   <div class="left" *ngIf="!isLoading">
     <div class="head">
       <div class="navigation-pane">
@@ -126,7 +129,9 @@
         <img
           src="/assets/images/empty-folder.png"
           alt="image"
-          *ngIf="data.files.length == 0 && data.folders.length == 0 && !isLoading"
+          *ngIf="
+            data.files.length == 0 && data.folders.length == 0 && !isLoading
+          "
         />
       </div>
     </div>

@@ -24,13 +24,15 @@
   trash.
 </h4>
 <div class="main">
-  <div
-    *ngIf="isLoading"
-    class="spinner-border m-1 spinner"
-    role="status"
-    id="spinner"
-  >
-    <span class="sr-only"></span>
+  <div class="spinner" *ngIf="isLoading">
+    <div
+      *ngIf="isLoading"
+      class="spinner-border m-1"
+      role="status"
+      id="spinner"
+    >
+      <span class="sr-only"></span>
+    </div>
   </div>
   <table *ngIf="!isLoading">
     <thead *ngIf="!dataempty">
@@ -49,7 +51,11 @@
         <td>{{ separateDateTime(item.created_at) }}</td>
         <td>{{ separateDateTime(item.updated_at) }}</td>
         <td>...</td>
-        <td><i class="material-icons restore" (click)="restorefolder(item.id)" >restore_from_trash</i></td>
+        <td>
+          <i class="material-icons restore" (click)="restorefolder(item.id)"
+            >restore_from_trash</i
+          >
+        </td>
       </tr>
 
       <tr *ngFor="let item of data[1]" class="table">
@@ -58,8 +64,11 @@
         <td>{{ separateDateTime(item.created_at) }}</td>
         <td>{{ separateDateTime(item.updated_at) }}</td>
         <td>{{ item.size }} Ko</td>
-        <td><i class="material-icons restore" (click)="restorefile(item.id)" >restore_from_trash</i></td>
-
+        <td>
+          <i class="material-icons restore" (click)="restorefile(item.id)"
+            >restore_from_trash</i
+          >
+        </td>
       </tr>
     </tbody>
   </table>

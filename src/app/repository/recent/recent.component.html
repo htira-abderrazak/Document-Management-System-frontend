@@ -5,13 +5,10 @@
 <h2>Recent</h2>
 
 <div class="main">
-  <div
-    *ngIf="isLoading"
-    class="spinner-border m-1 spinner"
-    role="status"
-    id="spinner"
-  >
-    <span class="sr-only"></span>
+  <div class="spinner" *ngIf="isLoading">
+    <div *ngIf="isLoading" class="spinner-border m-1" role="status" id="spinner">
+      <span class="sr-only"></span>
+    </div>
   </div>
   <table *ngIf="!isLoading">
     <thead *ngIf="!dataempty">
