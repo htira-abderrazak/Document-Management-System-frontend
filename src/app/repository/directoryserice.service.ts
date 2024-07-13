@@ -92,6 +92,16 @@ export class DirectorysericeService {
   }
   //return if the array of arrays is empty
   isArrayEmptyEvery(arr: any[]): boolean {
+    // Check if arr is an array
+    if (!Array.isArray(arr)) {
+      return false;
+    }
+
+    // Check if all elements in arr are arrays
+    if (!arr.every(element => Array.isArray(element))) {
+      return false;
+    }
+
     return arr.every(element => element.length === 0);
   }
 
