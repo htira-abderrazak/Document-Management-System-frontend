@@ -1,0 +1,41 @@
+<div class="body">
+  <div class="main">
+    <div class="container a-container" id="a-container">
+      <form
+        class="form"
+        id="a-form"
+        [formGroup]="signupform"
+        (ngSubmit)="
+          register(
+            signupform.value.username,
+            signupform.value.email,
+            signupform.value.password
+          )
+        "
+      >
+        <h2 class="form_title title">Create Account</h2>
+        <input
+          class="form__input"
+          type="text"
+          placeholder="name"
+          formControlName="username"
+        />
+        <input
+          class="form__input"
+          type="text"
+          placeholder="Email"
+          formControlName="email"
+        />
+        <input
+          class="form__input"
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <button class="form__button button submit">SIGN UP</button>
+        <p routerLink="/login" >Already have an account </p>
+
+      </form>
+    </div>
+  </div>
+</div>

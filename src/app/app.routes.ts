@@ -7,8 +7,19 @@ import { SearchComponent } from './repository/search/search.component';
 import { TrashComponent } from './repository/trash/trash.component';
 import { FavoriteComponent } from './repository/favorite/favorite.component';
 import { RecentComponent } from './repository/recent/recent.component';
+import { LogginComponent } from './auth/loggin/loggin.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 export const routes: Routes = [
+  {
+    path: 'login',
+    component: LogginComponent,
+  },
+  {
+    path: 'signup',
+    component:SignupComponent ,
+  },
+
   {
     path: '',
     component: HomeComponent,

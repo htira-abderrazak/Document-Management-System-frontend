@@ -1,0 +1,17 @@
+<div class="body">
+  <div class="main">
+    <div class="container a-container" id="a-container">
+      <form
+        class="form"
+        [formGroup]="loginform"
+        (ngSubmit)="login(loginform.value.username, loginform.value.password)"
+      >
+        <h2 class="form_title title">Welcome Back</h2>
+        <input class="form__input" type="text" placeholder="Name" formControlName="username"  />
+        <input class="form__input" type="password" placeholder="Password" formControlName="password" />
+        <button class="form__button button submit">SIGN IN</button>
+        <p routerLink="/signup" >Create an account</p>
+      </form>
+    </div>
+  </div>
+</div>
