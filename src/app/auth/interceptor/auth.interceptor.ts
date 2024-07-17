@@ -12,7 +12,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const httpClient = inject(HttpClient);
 
-  if ((req.url === `${environment.apiUrl}/login/` )||(req.url === `${environment.apiUrl}/login/refresh/` )||(req.url === `${environment.apiUrl}/register/` ) ) {
+  if (
+    req.url === `${environment.apiUrl}/login/` ||
+    req.url === `${environment.apiUrl}/login/refresh/` ||
+    req.url === `${environment.apiUrl}/register/`
+  ) {
     return next(req);
   }
   let authReq = req;
@@ -39,7 +43,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             })
             .pipe(
               switchMap((response: any) => {
-                authservice.setToken(response.access, response.refesh);
+                authservice.setToken(response.access, response.refresh);
                 // Clone the original request with the new token
                 const clonedRequest = authReq.clone({
                   setHeaders: {
