@@ -107,13 +107,13 @@ export class HomeComponent {
   createFolder(name: any): void {
     this.directoryService
       .createFolder(name, this.local.get('folder'))
-      .subscribe(
-        (data) => {
+      .subscribe({
+        next: (data) => {
           this.reloadChild();
           this.modalService.dismissAll();
         },
-        (error) => (this.error = error.error.name)
-      );
+        error: (error) => (this.error = error.error.name),
+      });
   }
 
   closeWindow() {
@@ -237,7 +237,7 @@ export class HomeComponent {
             error: (error) => {
               if (error.status == '400') {
                 this.showrrorNamemessage();
-                this.erroMessage = this.getMessage(error.error)
+                this.erroMessage = this.getMessage(error.error);
               } else this.showerrormessage();
             },
           });

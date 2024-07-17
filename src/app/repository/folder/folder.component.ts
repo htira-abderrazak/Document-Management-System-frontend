@@ -179,32 +179,32 @@ export class FolderComponent implements OnInit {
   }
 
   renamefolder(name: any) {
-    this.directoryserverce.renameFolder(name, this.selectedid).subscribe(
-      (data: any) => {
+    this.directoryserverce.renameFolder(name, this.selectedid).subscribe({
+      next: (data: any) => {
         window.location.reload();
         this.modalService.dismissAll();
       },
-      (error) => {
+      error: (error) => {
         if (error.status == '400') this.error = 'name already exist';
         else this.error = 'error try later';
-      }
-    );
+      },
+    });
   }
 
   renamefile(name: any) {
     const Data = new FormData();
 
     Data.append('name', name);
-    this.directoryserverce.renameFile(Data, this.selectedid).subscribe(
-      (data: any) => {
+    this.directoryserverce.renameFile(Data, this.selectedid).subscribe({
+      next: (data: any) => {
         window.location.reload();
         this.modalService.dismissAll();
       },
-      (error) => {
+      error: (error) => {
         if (error.status == '400') this.error = 'name already exist';
         else this.error = 'error try later';
-      }
-    );
+      },
+    });
   }
   //open file
   openfile(url: string) {
@@ -235,19 +235,19 @@ export class FolderComponent implements OnInit {
   //delete folder
   deleteFolder(name: any, id: any) {
     if (confirm('Are you sure to delete the folder ' + name + '?')) {
-      this.directoryserverce.deleteFolder(id).subscribe(
-        () => {
+      this.directoryserverce.deleteFolder(id).subscribe({
+        next: () => {
           alert('deleted successfully!');
           this.data.folders.splice(
             this.data.folders.findIndex((obj) => obj.id === id),
             1
           );
         },
-        (error) => {
+        error: (error) => {
           if (error.status == '400') this.error = 'name already exist';
           alert('error!');
-        }
-      );
+        },
+      });
     }
   }
 
@@ -260,19 +260,19 @@ export class FolderComponent implements OnInit {
   //delete file
   deleteFile(name: any, id: any) {
     if (confirm('Are you sure to delete the file ' + name + '?')) {
-      this.directoryserverce.deleteFile(id).subscribe(
-        () => {
+      this.directoryserverce.deleteFile(id).subscribe({
+        next: () => {
           alert('deleted successfully!');
           this.data.files.splice(
             this.data.files.findIndex((obj) => obj.id === id),
             1
           );
         },
-        (error) => {
+        error: (error) => {
           if (error.status == '400') this.error = 'name already exist';
           alert('error!');
-        }
-      );
+        },
+      });
     }
   }
   showContextMenubyleftClickfolders(event: MouseEvent) {
@@ -282,24 +282,24 @@ export class FolderComponent implements OnInit {
     this.contextMenufiles.show(event); // Show the context menu at the click event coordinatese
   }
   addFileToFavorite(id: string) {
-    this.directoryserverce.addFilertofavorite(id).subscribe(
-      () => {
+    this.directoryserverce.addFilertofavorite(id).subscribe({
+      next: () => {
         alert('added successfully!');
       },
-      (error) => {
+      error: (error) => {
         alert('error!');
-      }
-    );
+      },
+    });
   }
 
   addFolderToFavorite(id: string) {
-    this.directoryserverce.addFoldertofavorite(id).subscribe(
-      () => {
+    this.directoryserverce.addFoldertofavorite(id).subscribe({
+      next: () => {
         alert('added successfully!');
       },
-      (error) => {
+      error: (error) => {
         alert('error!');
-      }
-    );
+      },
+    });
   }
 }

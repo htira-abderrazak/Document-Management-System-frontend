@@ -39,46 +39,45 @@ export class TrashComponent implements OnInit {
     this.isLoadingButton = true; // Show loading indicator
 
     // Replace with your actual request logic
-    this.directoryservice.cleanTrash().subscribe(
-      (response) => {
+    this.directoryservice.cleanTrash().subscribe({
+      next: (response) => {
         // Handle successful response
-        console.log(response);
         window.location.reload();
       },
-      (error) => {
+      error: (error) => {
         // Handle error
         console.error(error);
         this.isLoadingButton = false;
         alert('error!');
-      }
-    );
+      },
+    });
   }
 
   restorefile(id: string) {
     this.isLoading = true;
-    this.directoryservice.restoreFile(id).subscribe(
-      (response) => {
+    this.directoryservice.restoreFile(id).subscribe({
+      next: (response) => {
         window.location.reload();
       },
-      (error) => {
+      error: (error) => {
         // Handle error
         console.error(error);
         alert('error!');
-      }
-    );
+      },
+    });
   }
 
   restorefolder(id: string) {
     this.isLoading = true;
-    this.directoryservice.restoreFolder(id).subscribe(
-      (response) => {
+    this.directoryservice.restoreFolder(id).subscribe({
+      next: (response) => {
         window.location.reload();
       },
-      (error) => {
+      error: (error) => {
         // Handle error
         console.error(error);
         alert('error!');
-      }
-    );
+      },
+    });
   }
 }
