@@ -9,6 +9,7 @@ import { FavoriteComponent } from './repository/favorite/favorite.component';
 import { RecentComponent } from './repository/recent/recent.component';
 import { LogginComponent } from './auth/loggin/loggin.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
@@ -25,12 +26,12 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: '', redirectTo: 'mydrive', pathMatch: 'full' },
-      { path: 'folder/:id', component: FolderComponent },
-      { path: 'mydrive', component: MyDiskComponent },
-      { path: 'search/:name', component: SearchComponent },
-      { path: 'trash', component: TrashComponent },
-      { path: 'favorite', component: FavoriteComponent },
-      { path: 'recent', component: RecentComponent },
+      { path: 'folder/:id', component: FolderComponent,canActivate: [authGuard] },
+      { path: 'mydrive', component: MyDiskComponent ,canActivate: [authGuard]},
+      { path: 'search/:name', component: SearchComponent ,canActivate: [authGuard]},
+      { path: 'trash', component: TrashComponent,canActivate: [authGuard] },
+      { path: 'favorite', component: FavoriteComponent,canActivate: [authGuard] },
+      { path: 'recent', component: RecentComponent ,canActivate: [authGuard]},
     ],
   },
 ];
