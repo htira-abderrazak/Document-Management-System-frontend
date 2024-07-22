@@ -9,16 +9,17 @@ import { FavoriteComponent } from './repository/favorite/favorite.component';
 import { RecentComponent } from './repository/recent/recent.component';
 import { LogginComponent } from './auth/loggin/loggin.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { authGuard } from './auth.guard';
+import { authGuard } from './guard/auth.guard';
+import { signGuard } from './guard/sign.guard';
 
 export const routes: Routes = [
   {
     path: 'login',
-    component: LogginComponent,
+    component: LogginComponent,canActivate: [signGuard]
   },
   {
     path: 'signup',
-    component:SignupComponent ,
+    component: SignupComponent,canActivate: [signGuard]
   },
 
   {
@@ -26,12 +27,24 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: '', redirectTo: 'mydrive', pathMatch: 'full' },
-      { path: 'folder/:id', component: FolderComponent,canActivate: [authGuard] },
-      { path: 'mydrive', component: MyDiskComponent ,canActivate: [authGuard]},
-      { path: 'search/:name', component: SearchComponent ,canActivate: [authGuard]},
-      { path: 'trash', component: TrashComponent,canActivate: [authGuard] },
-      { path: 'favorite', component: FavoriteComponent,canActivate: [authGuard] },
-      { path: 'recent', component: RecentComponent ,canActivate: [authGuard]},
+      {
+        path: 'folder/:id',
+        component: FolderComponent,
+        canActivate: [authGuard],
+      },
+      { path: 'mydrive', component: MyDiskComponent, canActivate: [authGuard] },
+      {
+        path: 'search/:name',
+        component: SearchComponent,
+        canActivate: [authGuard],
+      },
+      { path: 'trash', component: TrashComponent, canActivate: [authGuard] },
+      {
+        path: 'favorite',
+        component: FavoriteComponent,
+        canActivate: [authGuard],
+      },
+      { path: 'recent', component: RecentComponent, canActivate: [authGuard] },
     ],
   },
 ];
