@@ -53,7 +53,7 @@ export class HomeComponent {
   search_name = new FormControl('');
   isActiveRoute: boolean = false;
   erroMessage = '';
-
+  isSideMenuVisible = true;
   size: number = 0;
   constructor(
     private router: Router,
@@ -75,14 +75,17 @@ export class HomeComponent {
       childRoute!.snapshot.url[0].path == 'folder' ||
       childRoute!.snapshot.url[0].path == 'mydrive'
     ) {
+      this.isSideMenuVisible = false;
       this.modalRef = this.modalService
         .open(content, { ariaLabelledBy: 'modal-basic-title' })
         .result.then(
           (result) => {
             this.closeResult = `Closed with: ${result}`;
+            this.isSideMenuVisible = true;
           },
           (reason) => {
             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            this.isSideMenuVisible = true;
           }
         );
     }

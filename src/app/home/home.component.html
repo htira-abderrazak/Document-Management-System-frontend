@@ -197,13 +197,12 @@
 <div
   class="modal fade"
   id="leftModal"
-  tabindex="-1"
   aria-labelledby="leftModalLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog modal-dialog-left">
     <div class="modal-content full-height">
-      <div class="col-sm-2 responsive-sidebar">
+      <div *ngIf="isSideMenuVisible" class="col-sm-2 responsive-sidebar">
         <div ngbDropdown class="d-inline-block">
           <button class="add-buttom" id="dropdownBasic1" ngbDropdownToggle>
             <i class="material-icons sidebar-icon">add</i>
