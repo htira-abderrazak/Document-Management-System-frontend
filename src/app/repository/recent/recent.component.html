@@ -6,23 +6,28 @@
 
 <div class="main">
   <div class="spinner" *ngIf="isLoading">
-    <div *ngIf="isLoading" class="spinner-border m-1" role="status" id="spinner">
+    <div
+      *ngIf="isLoading"
+      class="spinner-border m-1"
+      role="status"
+      id="spinner"
+    >
       <span class="sr-only"></span>
     </div>
   </div>
   <table *ngIf="!isLoading">
     <thead *ngIf="!dataempty">
       <tr>
-        <th></th>
-        <th style="width: 350px">Name</th>
-        <th style="width: 150px">created at</th>
-        <th style="width: 150px">Last modifid</th>
-        <th style="width: 150px">size</th>
+        <th class="icon-cell"></th>
+        <th>Name</th>
+        <th>created at</th>
+        <th>Last modifid</th>
+        <th>size</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of data[0]" class="table">
-        <td><i class="material-icons">folder</i></td>
+        <td class="icon-cell"><i class="material-icons">folder</i></td>
         <td>{{ item.name }}</td>
         <td>{{ separateDateTime(item.created_at) }}</td>
         <td>{{ separateDateTime(item.updated_at) }}</td>
@@ -30,7 +35,7 @@
       </tr>
 
       <tr *ngFor="let item of data[1]" class="table">
-        <td><i class="material-icons">description</i></td>
+        <td class="icon-cell"><i class="material-icons">description</i></td>
         <td>{{ item.name }}</td>
         <td>{{ separateDateTime(item.created_at) }}</td>
         <td>{{ separateDateTime(item.updated_at) }}</td>

@@ -5,7 +5,12 @@
 
 <div class="mycontainer">
   <div class="spinner" *ngIf="isLoading">
-    <div *ngIf="isLoading" class="spinner-border m-1" role="status" id="spinner">
+    <div
+      *ngIf="isLoading"
+      class="spinner-border m-1"
+      role="status"
+      id="spinner"
+    >
       <span class="sr-only"></span>
     </div>
   </div>
@@ -27,7 +32,7 @@
     </div>
 
     <div class="main">
-      <div *ngIf="this.show_grid == 'true'">
+      <div *ngIf="this.show_grid == 'true'" class="grid-display">
         <div
           class="folder"
           *ngFor="let item of data.folders"
@@ -52,7 +57,7 @@
           (click)="openfile(item.file)"
           #files
         >
-          <i class="material-icons">description</i>
+          <i class="material-icons folder-i">description</i>
           <h1>{{ item.name }}</h1>
           <p-contextMenu
             [target]="files"
@@ -66,11 +71,11 @@
       <table *ngIf="this.show_grid == 'false'">
         <thead *ngIf="!(data.files.length == 0 && data.folders.length == 0)">
           <tr>
-            <th></th>
-            <th style="width: 350px">Name</th>
-            <th style="width: 150px">created at</th>
-            <th style="width: 150px">Last modifid</th>
-            <th style="width: 150px">size</th>
+            <th class="icon-cell"></th>
+            <th>Name</th>
+            <th>created at</th>
+            <th>Last modifid</th>
+            <th>size</th>
           </tr>
         </thead>
         <tbody>
@@ -79,7 +84,7 @@
             class="table"
             routerLink="/folder/{{ item.id }}"
           >
-            <td><i class="material-icons">folder</i></td>
+            <td class="icon-cell" ><i class="material-icons">folder</i></td>
             <td>{{ item.name }}</td>
             <td>{{ separateDateTime(item.created_at) }}</td>
             <td>{{ separateDateTime(item.updated_at) }}</td>
@@ -104,7 +109,7 @@
             class="table"
             (click)="openfile(item.file)"
           >
-            <td><i class="material-icons">description</i></td>
+            <td class="icon-cell"><i class="material-icons">description</i></td>
             <td>{{ item.name }}</td>
             <td>{{ separateDateTime(item.created_at) }}</td>
             <td>{{ separateDateTime(item.updated_at) }}</td>
@@ -125,6 +130,7 @@
           </tr>
         </tbody>
       </table>
+
       <div class="empty-image">
         <img
           src="/assets/images/empty-folder.png"

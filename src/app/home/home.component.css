@@ -1,16 +1,22 @@
 .header,
 .row {
-  overflow-x: hidden; /* Disable horizontal scroll for header and row elements */
-  margin: 0; /* Reset margins */
-  padding: 0; /* Reset paddings */
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 .body {
   background-color: #f8fafd;
+  display: flex;
+  flex: 1;
 }
 
 .header {
   background-color: #f8fafd;
-  height: 10vh;
   display: flex;
   align-items: center;
   color: rgb(0, 0, 0);
@@ -20,24 +26,24 @@
   margin-left: 0px;
   font-weight: 400;
 }
+.logo {
+  display: flex;
+  align-items: center;
 
-input.search {
-  padding: 10px 30px 10px 40px;
+}
+.menu-icon {
+  display: none;
+}
+input.form-control {
   border: 1px solid #ccc;
   border-radius: 50px;
   font-size: 16px;
-  width: 50%;
+  min-width: 40%;
   outline: none;
-  transition: border-color background-color 1s ease-in-out;
   background-color: #e9eef6;
-}
 
-button .search {
-  position: absolute;
   cursor: pointer;
   color: #666;
-  margin-top: 10px;
-  margin-left: -10px;
 }
 
 input:focus {
@@ -47,7 +53,13 @@ input:focus {
 
 .sidebar {
   padding: 20px;
-  height: 90vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.responsive-sidebar {
+  padding: 20px;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -118,15 +130,31 @@ button.add-buttom:hover {
 .file-upload p {
   margin-top: 10px;
 }
+@media (min-width: 1400px) and (max-width: 1599px) {
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+}
 
-/* buttom search css */
 
-.search-btn {
+@media (max-width: 991px) {
+  .sidebar {
+    display: none;
+  }
+  .main-content {
+    width: 100%;
+  }
+  .menu-icon {
+    display: block;
+  }
+}
+@media (max-width: 700px) {
+  h1 {
+    display: none;
+  }
+}
+.modal-dialog-left {
   position: absolute;
-  margin-left: -40px;
-  margin-top: 5px;
-  background-color: transparent;
-  border-radius: 100%;
-  border: none;
-  padding-top: 5px;
+  left: 0;
+  margin: 0;
+  height: 100%;
 }
