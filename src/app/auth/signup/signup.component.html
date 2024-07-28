@@ -2,6 +2,7 @@
   <div class="main">
     <div class="container a-container" id="a-container">
       <form
+        ngNativeValidate
         class="form"
         id="a-form"
         [formGroup]="signupform"
@@ -19,22 +20,26 @@
           type="text"
           placeholder="name"
           formControlName="username"
+          required
         />
         <input
           class="form__input"
           type="text"
           placeholder="Email"
           formControlName="email"
+          required
         />
         <input
           class="form__input"
           type="password"
           placeholder="Password"
           formControlName="password"
+          required
         />
-        <button class="form__button button submit">SIGN UP</button>
-        <p routerLink="/login" >Already have an account </p>
+        <div id="error" style="display: none; color: red">{{ this.error }}</div>
 
+        <button class="form__button button submit">SIGN UP</button>
+        <p routerLink="/login">Already have an account</p>
       </form>
     </div>
   </div>
