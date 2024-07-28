@@ -20,3 +20,16 @@ img {
   width: 100%;
   height: 75vh;
 }
+
+@media (max-width: 991px){
+
+  table{
+    overflow-y: scroll;
+    display: block;
+  }
+  img {
+    opacity: 0.2;
+    height: 300px;
+  }
+
+}

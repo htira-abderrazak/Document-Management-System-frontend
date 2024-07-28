@@ -34,5 +34,9 @@ img {
     overflow-y: scroll;
     display: block;
   }
+  img {
+    opacity: 0.2;
+    height: 300px;
+  }
 
 }
