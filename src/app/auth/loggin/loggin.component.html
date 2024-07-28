@@ -2,14 +2,16 @@
   <div class="main">
     <div class="container a-container" id="a-container">
       <form
+      ngNativeValidate 
         class="form"
         [formGroup]="loginform"
         (ngSubmit)="login(loginform.value.username, loginform.value.password)"
       >
         <h2 class="form_title title">Welcome Back</h2>
-        <input class="form__input" type="text" placeholder="Name" formControlName="username"  />
-        <input class="form__input" type="password" placeholder="Password" formControlName="password" />
-        <button class="form__button button submit">SIGN IN</button>
+        <input class="form__input" type="text" placeholder="Name" formControlName="username" required />
+        <input class="form__input" type="password" placeholder="Password" formControlName="password" required />
+        <div id="error" style="display: none; color: red;">{{this.error}}</div>
+        <input type="submit" value="Sign in" /><br />
         <p routerLink="/signup" >Create an account</p>
       </form>
     </div>

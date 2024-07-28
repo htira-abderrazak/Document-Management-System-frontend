@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators,FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router, RouterModule } from '@angular/router';
 @Component({
@@ -7,7 +12,7 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './loggin.component.html',
-  styleUrl: './loggin.component.css'
+  styleUrl: './loggin.component.css',
 })
 export class LogginComponent {
   error = '';
@@ -19,7 +24,7 @@ export class LogginComponent {
   ) {
     this.loginform = this.FormBuilder.group({
       username: ['', Validators.required],
-      password: '',
+      password: ['', Validators.required],
     });
   }
   login(username: string, password: string) {
@@ -29,7 +34,7 @@ export class LogginComponent {
         this.AuthService.navigateTopreviousUrl();
       },
       error: (error) => {
-        if (error.status == '401') {
+        if (error.status == '400') {
           const error_message = document.getElementById('error') as HTMLElement;
           error_message.style.display = 'block';
 
