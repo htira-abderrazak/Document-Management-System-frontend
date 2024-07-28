@@ -11,6 +11,7 @@ import { LogginComponent } from './auth/loggin/loggin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { authGuard } from './guard/auth.guard';
 import { signGuard } from './guard/sign.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -46,5 +47,9 @@ export const routes: Routes = [
       },
       { path: 'recent', component: RecentComponent, canActivate: [authGuard] },
     ],
+
+  },  {
+    path: '**',
+    component: NotFoundComponent
   },
 ];
