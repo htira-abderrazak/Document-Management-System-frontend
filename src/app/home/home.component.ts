@@ -24,6 +24,7 @@ import { timer, fromEvent } from 'rxjs';
 import { takeUntil, mergeMap, tap } from 'rxjs/operators';
 
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -58,7 +59,8 @@ export class HomeComponent {
     private router: Router,
     private directoryService: DirectorysericeService,
     private local: LocalStorageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authservice : AuthService
   ) {}
 
   ngOnInit() {
@@ -252,5 +254,17 @@ export class HomeComponent {
   getMessage(myObject: any): string {
     const key = Object.keys(myObject)[0];
     return myObject[key];
+  }
+
+  logout() {
+    this.authservice.logout().subscribe({
+      next: () => {
+        this.authservice.removeToken();
+        this.router.navigate(["/login"])
+      },
+      error: () => {
+        alert('error!');
+      }
+    })
   }
 }
