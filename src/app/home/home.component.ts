@@ -66,7 +66,9 @@ export class HomeComponent {
   ngOnInit() {
     this.directoryService.getTotalSize().subscribe((data: any) => {
       this.size = data;
-      this.local.set("total-size",data)
+      this.local.set("total-size",data.total_size)
+      this.local.set("max-size",data.max_size)
+
     });
   }
   open(content: TemplateRef<any>) {
