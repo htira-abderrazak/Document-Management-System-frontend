@@ -12,6 +12,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { authGuard } from './guard/auth.guard';
 import { signGuard } from './guard/sign.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { StorageComponent } from './repository/storage/storage.component';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,8 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
       { path: 'recent', component: RecentComponent, canActivate: [authGuard] },
+      { path: 'storage', component: StorageComponent, canActivate: [authGuard] },
+
     ],
 
   },  {

@@ -1,0 +1,66 @@
+h2 {
+  margin-bottom: 5vb;
+}
+
+.arc {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.discription {
+  border-radius: 5%;
+  background-color: beige;
+  padding: 10px;
+  width: 450px;
+}
+
+.color-1,
+.color-2 {
+  display: flex;
+  align-items: center;
+
+  font-size: 22px;
+}
+.color1 {
+  width: 20px;
+  height: 20px;
+  background-color: steelblue;
+  margin-right: 10px;
+}
+
+.color2 {
+  width: 20px;
+  height: 20px;
+  background-color: lightgray;
+  margin-right: 10px;
+}
+
+span {
+  font-size: 40px;
+}
+
+#arcContainer {
+  margin-right: 20px;
+}
+button{
+  margin-top: 20px;
+}
+@media (max-width: 896px) {
+  .arc {
+    display: flex;
+    flex-direction: column;
+  }
+  #arcContainer {
+    margin-bottom: 20px;
+  }
+  .color-1,
+  .color-2 {
+    font-size: 18px;
+  }
+  span {
+    font-size: 30px;
+  }
+  .discription{
+    width: 100%;
+  }
+}
