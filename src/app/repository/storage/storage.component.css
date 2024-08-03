@@ -44,6 +44,18 @@ span {
 }
 button{
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  height: 60px;
+  color: rgb(77, 96, 207);
+  margin-bottom: 20px;
+  border: 1px solid rgb(44, 44, 44);
+  font-size: 20px;
+  border-radius: 25px;
+}
+button:hover{
+  background-color: #edf1fa;
 }
 @media (max-width: 896px) {
   .arc {
