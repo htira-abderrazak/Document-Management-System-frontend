@@ -234,7 +234,9 @@ export class HomeComponent {
               this.showSuccessMessage();
               this.reloadChild();
               this.directoryService.getTotalSize().subscribe((data: any) => {
-                this.size = data;
+                this.size = data.total_size;
+                this.local.set("total-size",data.total_size)
+                this.local.set("max-size",data.max_size)
               });
             }),
             // Close the div after 3 seconds:
