@@ -13,6 +13,7 @@ import { authGuard } from './guard/auth.guard';
 import { signGuard } from './guard/sign.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { StorageComponent } from './repository/storage/storage.component';
+import { CardComponent } from './payment/card/card.component';
 
 export const routes: Routes = [
   {
@@ -51,6 +52,8 @@ export const routes: Routes = [
 
     ],
 
+  }, {
+    path : 'payment',component :  CardComponent,canActivate:[authGuard]
   },  {
     path: '**',
     component: NotFoundComponent

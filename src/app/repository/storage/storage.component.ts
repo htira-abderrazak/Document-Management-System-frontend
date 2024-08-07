@@ -1,11 +1,12 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { LocalStorageService } from 'angular-web-storage';
 import * as d3 from 'd3';
 
 @Component({
   selector: 'app-storage',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './storage.component.html',
   styleUrl: './storage.component.css',
 })

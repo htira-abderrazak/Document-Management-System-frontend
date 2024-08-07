@@ -22,6 +22,7 @@
     "@angular/ssr": "^17.0.0",
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@popperjs/core": "^2.11.8",
+    "@stripe/stripe-js": "^4.1.0",
     "angular-web-storage": "^17.0.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.2",
