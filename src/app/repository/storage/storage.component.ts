@@ -19,7 +19,7 @@ export class StorageComponent {
   ngOnInit(): void {
     const size = this.local.get('total-size');
     const max_size = this.local.get('max-size');
-    this.used_storage = size;
+    this.used_storage = Math.round(size * 10) / 10;
     this.availbe_storage = max_size;
     this.size = (size / max_size) * 100;
     this.changeArcDemension();

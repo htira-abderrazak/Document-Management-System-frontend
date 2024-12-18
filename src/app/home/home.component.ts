@@ -60,15 +60,15 @@ export class HomeComponent {
     private directoryService: DirectorysericeService,
     private local: LocalStorageService,
     private activatedRoute: ActivatedRoute,
-    private authservice : AuthService
+    private authservice: AuthService
   ) {}
 
   ngOnInit() {
     this.directoryService.getTotalSize().subscribe((data: any) => {
-      this.size = (data.total_size/data.max_size)*100;
-      this.local.set("total-size",data.total_size)
-      this.local.set("max-size",data.max_size)
-
+      this.size =
+        (data.total_size / 1024 / 1024 / (data.max_size / 1024 / 1024)) * 100;
+      this.local.set('total-size', data.total_size / 1024 / 1024);
+      this.local.set('max-size', data.max_size / 1024 / 1024);
     });
   }
   open(content: TemplateRef<any>) {
@@ -235,8 +235,8 @@ export class HomeComponent {
               this.reloadChild();
               this.directoryService.getTotalSize().subscribe((data: any) => {
                 this.size = data.total_size;
-                this.local.set("total-size",data.total_size)
-                this.local.set("max-size",data.max_size)
+                this.local.set('total-size', data.total_size / 1024 / 1024);
+                this.local.set('max-size', data.max_size / 1024 / 1024);
               });
             }),
             // Close the div after 3 seconds:
@@ -268,11 +268,11 @@ export class HomeComponent {
     this.authservice.logout().subscribe({
       next: () => {
         this.authservice.removeToken();
-        this.router.navigate(["/login"])
+        this.router.navigate(['/login']);
       },
       error: () => {
         alert('error!');
-      }
-    })
+      },
+    });
   }
 }
