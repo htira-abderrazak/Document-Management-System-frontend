@@ -28,6 +28,8 @@ export class LogginComponent {
     });
   }
   login(username: string, password: string) {
+    const submit_button = document.getElementById('submit-button') as HTMLElement;
+    submit_button.style.backgroundColor = 'grey';
     this.AuthService.login(username, password).subscribe({
       next: (result: any) => {
         this.AuthService.setToken(result.access, result.refresh);
@@ -39,6 +41,8 @@ export class LogginComponent {
           error_message.style.display = 'block';
 
           this.error = 'username or password is incorrect';
+
+          submit_button.style.backgroundColor = '#4b70e2';
         } else this.error = 'error';
       },
     });
