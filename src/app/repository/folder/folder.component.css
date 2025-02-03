@@ -149,7 +149,7 @@ button {
   }
   .folder {
     float: left;
-    width: 75px;
+    width: 50px;
     height: 100px;
     margin-right: 40px;
     margin-bottom: 40px;
@@ -172,5 +172,8 @@ button {
   img {
     opacity: 0.2;
     height: 300px;
+  }
+  .left{
+    margin-right: 0px;
   }
 }
