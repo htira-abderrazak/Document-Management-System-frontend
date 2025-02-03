@@ -34,7 +34,7 @@ export class LogginComponent {
         this.AuthService.navigateTopreviousUrl();
       },
       error: (error) => {
-        if (error.status == '400') {
+        if (error.status == '401') {
           const error_message = document.getElementById('error') as HTMLElement;
           error_message.style.display = 'block';
 
