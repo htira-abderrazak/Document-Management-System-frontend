@@ -56,6 +56,6 @@ export const routes: Routes = [
     path : 'payment',component :  CardComponent,canActivate:[authGuard]
   },  {
     path: '**',
-    component: NotFoundComponent
+    loadComponent: () => import('./not-found/not-found.component').then(m => m.NotFoundComponent)
   },
 ];
