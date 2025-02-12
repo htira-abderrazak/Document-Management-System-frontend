@@ -14,8 +14,7 @@ import {
   NgbDropdownModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
-import { FolderComponent } from '../repository/folder/folder.component';
-import { MyDiskComponent } from '../repository/my-disk/my-disk.component';
+
 import { DirectorysericeService } from '../repository/directoryserice.service';
 
 import { LocalStorageService } from 'angular-web-storage';
@@ -31,10 +30,8 @@ import { AuthService } from '../auth/auth.service';
   standalone: true,
   imports: [
     CommonModule,
-    FolderComponent,
     RouterOutlet,
     RouterModule,
-    MyDiskComponent,
     NgbDropdownModule,
     ReactiveFormsModule,
     FormsModule,
