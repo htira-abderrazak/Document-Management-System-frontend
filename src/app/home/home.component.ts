@@ -234,7 +234,7 @@ export class HomeComponent {
               this.showSuccessMessage();
               this.reloadChild();
               this.directoryService.getTotalSize().subscribe((data: any) => {
-                this.size = data.total_size;
+                this.size = data.total_size / 1024 / 1024 ;
                 this.local.set('total-size', data.total_size / 1024 / 1024);
                 this.local.set('max-size', data.max_size / 1024 / 1024);
               });
