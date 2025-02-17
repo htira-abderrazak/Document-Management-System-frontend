@@ -35,7 +35,6 @@ import { Subject } from 'rxjs';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
     RouterModule,
     NgbDropdownModule,
     NgbDatepickerModule,
