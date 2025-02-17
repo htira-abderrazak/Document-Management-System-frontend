@@ -208,7 +208,7 @@ export class FolderComponent implements OnInit {
   }
   //open file
   openfile(url: string) {
-    window.open(this.API_URL + url, '_blank');
+    window.open(url, '_blank');
   }
 
   // remove seconds and minutes froim date
