@@ -35,7 +35,7 @@ export class CardComponent {
           next: (res: any) => {
             this.folderService.getTotalSize().subscribe({
               next: (res: any) => {
-                this.local.set('max-size', res.max_size);
+                this.local.set('max-size', res.max_size / 1024 / 1024);
                 this.route.navigate(['/storage']);
               },
             });
