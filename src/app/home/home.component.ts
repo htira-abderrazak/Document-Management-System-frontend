@@ -254,6 +254,7 @@ export class HomeComponent {
   }
 
   submit(event: Event) {
+    if(this.search_name.value!= '')
     this.router.navigate(['/search/', this.search_name.value]);
   }
   getMessage(myObject: any): string {
