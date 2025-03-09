@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://13.61.160.174',
+  apiUrl: 'https://dmsbackend.duckdns.org',
   recaptcha: {
     siteKey: '6LcnqBQpAAAAABZrxISU06XNzPuBoDL0_Get_c6k',
   },
