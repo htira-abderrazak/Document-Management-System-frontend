@@ -63,7 +63,6 @@ export class DirectorysericeService {
   }
   getFavorite() {
     return this.http.get(this.API_URL + '/favorite/');
-
   }
   addFoldertofavorite(id: string) {
     const body = {
@@ -98,17 +97,27 @@ export class DirectorysericeService {
     }
 
     // Check if all elements in arr are arrays
-    if (!arr.every(element => Array.isArray(element))) {
+    if (!arr.every((element) => Array.isArray(element))) {
       return false;
     }
 
-    return arr.every(element => element.length === 0);
+    return arr.every((element) => element.length === 0);
   }
 
   restoreFile(id: string) {
-    return this.http.put(this.API_URL + '/restore-file/' + id + '/',{});
+    return this.http.put(this.API_URL + '/restore-file/' + id + '/', {});
   }
   restoreFolder(id: string) {
-    return this.http.put(this.API_URL + '/restore-folder/' + id + '/',{});
+    return this.http.put(this.API_URL + '/restore-folder/' + id + '/', {});
+  }
+  movefile(folder: string, file: string) {
+    const body = {
+      folder: folder,
+      file: file,
+    };
+    return this.http.put(this.API_URL + '/movefile/', body);
+  }
+  getFoldertree() {
+    return this.http.get(this.API_URL + '/folderstree/');
   }
 }

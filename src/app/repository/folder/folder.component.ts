@@ -30,6 +30,12 @@ import { NavigationPaneComponent } from '../navigation-pane/navigation-pane.comp
 
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+
+interface TreeNode {
+  id: string;
+  name: string;
+  content: TreeNode[];
+}
 @Component({
   selector: 'app-folder',
   standalone: true,
@@ -51,6 +57,7 @@ export class FolderComponent implements OnInit {
   @ViewChild('contextMenufiles') contextMenufiles!: ContextMenu;
 
   private unsubscribe$ = new Subject<void>();
+  tree_data: TreeNode[] = [];
   data: Directory;
   id: any;
   API_URL = `${environment.apiUrl}`;
@@ -67,6 +74,8 @@ export class FolderComponent implements OnInit {
   selectedid: any; //the id selected to edit file or folder
   @ViewChild('renameFolder') modalrenamefolder!: TemplateRef<any>;
   @ViewChild('renameFile') modalrenamefile!: TemplateRef<any>;
+  @ViewChild('movefile') modalmovefile!: TemplateRef<any>;
+
   tree: any;
   isLoading = true;
   dataempty = false;
@@ -113,6 +122,17 @@ export class FolderComponent implements OnInit {
       {
         label: 'favorite',
         command: () => this.addFileToFavorite(this.selectedid),
+      },
+      {
+        label: 'move',
+        command: () => {
+          this.directoryserverce.getFoldertree().subscribe({
+            next: (data: any) => {
+              this.tree_data = data;
+              this.open(this.modalmovefile);
+            },
+          });
+        },
       },
     ];
   }
@@ -300,5 +320,53 @@ export class FolderComponent implements OnInit {
         alert('error!');
       },
     });
+  }
+
+  expandedNodes = new Set<string>();
+  selectedNodeId: string | null = null;
+
+  toggleExpand(nodeId: string): void {
+    if (this.expandedNodes.has(nodeId)) {
+      this.expandedNodes.delete(nodeId);
+    } else {
+      this.expandedNodes.add(nodeId);
+    }
+  }
+
+  isExpanded(nodeId: string): boolean {
+    return this.expandedNodes.has(nodeId);
+  }
+
+  onCheckboxClick(nodeId: string): void {
+    // If clicking the same checkbox, deselect it
+    if (this.selectedNodeId === nodeId) {
+      this.selectedNodeId = null;
+    } else {
+      // Select the new node (automatically deselects previous)
+      this.selectedNodeId = nodeId;
+    }
+  }
+
+  isSelected(nodeId: string): boolean {
+    return this.selectedNodeId === nodeId;
+  }
+
+  hasContent(node: TreeNode): boolean {
+    return node.content && node.content.length > 0;
+  }
+
+  moveFileToAnotherFolder() {
+    console.log(this.selectedNodeId!, this.selectedid);
+    this.directoryserverce
+      .movefile(this.selectedNodeId!, this.selectedid)
+      .subscribe({
+        next: () => {
+          window.location.reload();
+        },
+        error: (error) => {
+         
+          alert("error");
+        },
+      });
   }
 }

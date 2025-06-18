@@ -84,7 +84,7 @@
             class="table"
             routerLink="/folder/{{ item.id }}"
           >
-            <td class="icon-cell" ><i class="material-icons">folder</i></td>
+            <td class="icon-cell"><i class="material-icons">folder</i></td>
             <td>{{ item.name }}</td>
             <td>{{ separateDateTime(item.created_at) }}</td>
             <td>{{ separateDateTime(item.updated_at) }}</td>
@@ -249,5 +249,105 @@
         Rename
       </button>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #movefile let-modal>
+  <div class="modal-header">
+    <h2>Select a folder</h2>
+  </div>
+
+  <div class="tree-container">
+    <div class="tree-node" *ngFor="let node of tree_data">
+      <div class="node-header">
+        <div class="node-left">
+          <span
+            class="arrow"
+            [class.expanded]="isExpanded(node.id)"
+            [class.has-content]="hasContent(node)"
+            (click)="hasContent(node) && toggleExpand(node.id)"
+          >
+            <span *ngIf="hasContent(node)">▶</span>
+          </span>
+          <span class="node-name">{{ node.name }}</span>
+        </div>
+        <div class="node-right">
+          <input
+            type="checkbox"
+            class="node-checkbox"
+            [checked]="isSelected(node.id)"
+            (click)="onCheckboxClick(node.id)"
+          />
+        </div>
+      </div>
+
+      <div class="node-content" *ngIf="isExpanded(node.id) && hasContent(node)">
+        <div class="child-node" *ngFor="let child of node.content">
+          <div class="node-header">
+            <div class="node-left">
+              <span
+                class="arrow"
+                [class.expanded]="isExpanded(child.id)"
+                [class.has-content]="hasContent(child)"
+                (click)="hasContent(child) && toggleExpand(child.id)"
+              >
+                <span *ngIf="hasContent(child)">▶</span>
+              </span>
+              <span class="node-name">{{ child.name }}</span>
+            </div>
+            <div class="node-right">
+              <input
+                type="checkbox"
+                class="node-checkbox"
+                [checked]="isSelected(child.id)"
+                (click)="onCheckboxClick(child.id)"
+              />
+            </div>
+          </div>
+
+          <!-- Add more nesting levels if needed -->
+          <div
+            class="node-content"
+            *ngIf="isExpanded(child.id) && hasContent(child)"
+          >
+            <div class="child-node" *ngFor="let grandchild of child.content">
+              <div class="node-header">
+                <div class="node-left">
+                  <span class="arrow">
+                    <span *ngIf="hasContent(grandchild)">▶</span>
+                  </span>
+                  <span class="node-name">{{ grandchild.name }}</span>
+                </div>
+                <div class="node-right">
+                  <input
+                    type="checkbox"
+                    class="node-checkbox"
+                    [checked]="isSelected(grandchild.id)"
+                    (click)="onCheckboxClick(grandchild.id)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.dismiss('cancel Click')"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      [disabled]="this.selectedNodeId === null"
+      (click)="moveFileToAnotherFolder()"
+    >
+      move
+    </button>
   </div>
 </ng-template>
