@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+
+
+
+/*Chatbot Library Glaobal CSS */
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeicons/primeicons.css";
-
-
 :root {
   --bg-header-chatbot-box-message: #fd751e;
   --bg-chatbot-icon-container: #fd751e;
