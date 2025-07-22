@@ -74,18 +74,19 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
       this.inputText = undefined;
       this.waitingResponse = true;
       //Remove the welcome message
-      const request: ChatbotRequest = {
-        model: 'gpt-3.5-turbo',
-        messages: this.listOfMessages.slice(1),
+      const request= {
+
+        message: this.listOfMessages.slice(1),
       };
       //Do the call
-      this.http.post<ChatbotResponse>(this.basePath, request).subscribe({
-        next: (res: ChatbotResponse) => {
+      this.wsservice.send(request)
+      this.wsservice.onMessage().subscribe({
+        next: (res: any) => {
           this.waitingResponse = false;
-          if (res.content) {
+          if (res.response) {
             this.listOfMessages.push({
               role: 'assistant',
-              content: res.content,
+              content: res.response,
             });
           }
         },
