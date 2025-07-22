@@ -3,6 +3,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -27,7 +28,7 @@ import { MyChatbotLibraryService } from '../services/my-chatbot-library.service'
   templateUrl: './chatbot-textbox.component.html',
   styleUrl: './chatbot-textbox.component.css',
 })
-export class ChatbotTextboxComponent implements OnInit {
+export class ChatbotTextboxComponent implements OnInit, OnDestroy {
   @ViewChild('bodyChatbotContainer', { static: false })
   bodyContainer!: ElementRef;
 
@@ -51,7 +52,6 @@ export class ChatbotTextboxComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('sdsdsdsd');
     this.wsservice.connect();
   }
 
@@ -99,5 +99,9 @@ export class ChatbotTextboxComponent implements OnInit {
         },
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.wsservice.disconnect()
   }
 }
