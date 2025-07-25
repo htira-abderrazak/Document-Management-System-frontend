@@ -33,7 +33,6 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
   bodyContainer!: ElementRef;
 
   @Input({ required: true }) icons!: ChatbotIcons;
-  @Input({ required: true }) basePath!: string;
   @Output() closeChatbot = new EventEmitter<void>();
 
   readonly welcomeMessage: string =

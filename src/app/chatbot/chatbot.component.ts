@@ -13,7 +13,6 @@ import { ChatbotTextboxComponent } from './chatbot-textbox/chatbot-textbox.compo
 })
 export class ChatbotComponent implements OnDestroy {
   @Input({ required: true }) icons!: ChatbotIcons;
-  @Input({ required: true }) basePath!: string;
 
   showTextBox: boolean = false;
 
