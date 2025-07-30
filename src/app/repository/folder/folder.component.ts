@@ -31,6 +31,8 @@ import { NavigationPaneComponent } from '../navigation-pane/navigation-pane.comp
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+import { ChatbotComponent } from '../../chatbot/chatbot.component';
+import { ChatbotIcons } from '../../chatbot/interfaces/library.interface';
 interface TreeNode {
   id: string;
   name: string;
@@ -48,6 +50,7 @@ interface TreeNode {
     MenuModule,
     ReactiveFormsModule,
     NavigationPaneComponent,
+    ChatbotComponent,
   ],
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.css',
@@ -56,6 +59,11 @@ export class FolderComponent implements OnInit {
   @ViewChild('contextMenufolders') contextMenufolders!: ContextMenu;
   @ViewChild('contextMenufiles') contextMenufiles!: ContextMenu;
 
+  icons: ChatbotIcons = {
+    chatbotIcon: 'assets/icons/chatbot.svg',
+    userIcon: 'assets/icons/user.svg',
+  };
+  basePath: string = 'http://localhost:3800/message';
   private unsubscribe$ = new Subject<void>();
   tree_data: TreeNode[] = [];
   data: Directory;
@@ -364,9 +372,34 @@ export class FolderComponent implements OnInit {
           window.location.reload();
         },
         error: (error) => {
-         
-          alert("error");
+          alert('error');
         },
       });
+  }
+
+  onGrandchildTriggered() {
+    if (this.local.get('show_grid') == null) {
+      this.local.set('show_grid', 'true');
+    }
+    this.show_grid = this.local.get('show_grid');
+    this.primengConfig.ripple = true;
+
+    this.activatedRoute.paramMap
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((paramId) => {
+        this.isLoading = true;
+        this.id = paramId.get('id');
+        this.directoryserverce
+          .getFolderContent(this.id)
+          .subscribe((data: any) => {
+            this.data = data;
+            this.isLoading = false;
+            this.dataempty = this.directoryserverce.isArrayEmptyEvery(data);
+          });
+        this.local.set('folder', this.id);
+      });
+    this.directoryserverce.GetnavigationPane().subscribe((data: any) => {
+      this.tree = data;
+    });
   }
 }

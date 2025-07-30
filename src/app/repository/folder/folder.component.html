@@ -351,3 +351,11 @@
     </button>
   </div>
 </ng-template>
+
+<app-chatbot
+  [icons]="icons"
+  [id]="id"
+  [data]="data"
+  (triggerParent)="onGrandchildTriggered()"
+>
+</app-chatbot>
