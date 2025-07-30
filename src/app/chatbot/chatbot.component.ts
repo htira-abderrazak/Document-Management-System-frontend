@@ -3,7 +3,7 @@ import { ChatbotIcons } from './interfaces/library.interface';
 import { Subscription, filter, fromEvent } from 'rxjs';
 import { ChatbotIconComponent } from './chatbot-icon/chatbot-icon.component';
 import { ChatbotTextboxComponent } from './chatbot-textbox/chatbot-textbox.component';
-
+import { Directory } from '../repository/directory';
 @Component({
   selector: 'app-chatbot',
   standalone: true,
@@ -14,6 +14,7 @@ import { ChatbotTextboxComponent } from './chatbot-textbox/chatbot-textbox.compo
 export class ChatbotComponent implements OnDestroy {
   @Input({ required: true }) icons!: ChatbotIcons;
   @Input({ required: true }) id!: string;
+  @Input({ required: true }) data!: Directory;
 
   showTextBox: boolean = false;
 

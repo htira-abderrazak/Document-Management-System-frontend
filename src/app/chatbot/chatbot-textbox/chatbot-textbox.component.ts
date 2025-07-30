@@ -20,6 +20,7 @@ import { TypingDirective } from '../directives/typing.directive';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { MyChatbotLibraryService } from '../services/my-chatbot-library.service';
+import { Directory } from '../../repository/directory';
 
 @Component({
   selector: 'lib-chatbot-textbox',
@@ -32,6 +33,7 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
   @ViewChild('bodyChatbotContainer', { static: false })
   bodyContainer!: ElementRef;
 
+  @Input({ required: true }) data!: Directory;
   @Input({ required: true }) icons!: ChatbotIcons;
   @Input({ required: true }) id!: string;
   @Output() closeChatbot = new EventEmitter<void>();
@@ -73,13 +75,14 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
       });
       this.inputText = undefined;
       this.waitingResponse = true;
-      //Remove the welcome message
-      const request= {
 
-        message: this.listOfMessages.slice(1),
+      const request = {
+        message: String(this.inputText),
+        id: this.id,
+        data: this.data,
       };
       //Do the call
-      this.wsservice.send(request)
+      this.wsservice.send(request);
       this.wsservice.onMessage().subscribe({
         next: (res: any) => {
           this.waitingResponse = false;
