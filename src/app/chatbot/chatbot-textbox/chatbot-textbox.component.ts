@@ -38,6 +38,7 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
   @Input({ required: true }) icons!: ChatbotIcons;
   @Input({ required: true }) id!: string;
   @Output() closeChatbot = new EventEmitter<void>();
+  @Output() triggerParent = new EventEmitter<void>();
 
   readonly welcomeMessage: string =
     "Hello I'm Manu your virtual assistant. How can I help you?";
@@ -66,7 +67,7 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
             content: res.response,
           });
         }
-        console.log('this response', res);
+        if (res.reload == true) this.triggerParent.emit();
       },
       error: (err: any) => {
         this.waitingResponse = false;
@@ -75,7 +76,7 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
           role: 'assistant',
           content: this.errorMessage,
         });
-        console.log('this error', err);
+        if (err.reload == true) this.triggerParent.emit();
       },
     });
   }

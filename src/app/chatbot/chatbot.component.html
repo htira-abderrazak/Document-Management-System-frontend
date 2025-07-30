@@ -8,6 +8,8 @@
   [icons]="icons"
   [id]="id"
   [data]="data"
+  (triggerParent)="handleTriggerFromGrandchild()"
+
   (closeChatbot)="onCloseChatbot()"
 ></lib-chatbot-textbox>
 }

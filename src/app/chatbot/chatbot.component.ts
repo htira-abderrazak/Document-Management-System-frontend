@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { ChatbotIcons } from './interfaces/library.interface';
 import { Subscription, filter, fromEvent } from 'rxjs';
 import { ChatbotIconComponent } from './chatbot-icon/chatbot-icon.component';
@@ -15,6 +21,7 @@ export class ChatbotComponent implements OnDestroy {
   @Input({ required: true }) icons!: ChatbotIcons;
   @Input({ required: true }) id!: string;
   @Input({ required: true }) data!: Directory;
+  @Output() triggerParent = new EventEmitter<void>();
 
   showTextBox: boolean = false;
 
@@ -26,7 +33,9 @@ export class ChatbotComponent implements OnDestroy {
       this.keyInputSub.unsubscribe();
     }
   }
-
+  handleTriggerFromGrandchild() {
+    this.triggerParent.emit(); // bubble it up
+  }
   //Method called whenever the chatbot icon is clicked
   onChatbotClicked(): void {
     this.showTextBox = true;
