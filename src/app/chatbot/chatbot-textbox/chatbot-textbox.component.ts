@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { MyChatbotLibraryService } from '../services/my-chatbot-library.service';
 import { Directory } from '../../repository/directory';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'lib-chatbot-textbox',
@@ -47,7 +48,7 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
   listOfMessages: ChatbotMsg[] = [
     { role: 'assistant', content: this.welcomeMessage },
   ];
-
+  private messageSub?: Subscription;
   constructor(
     private http: HttpClient,
     private wsservice: MyChatbotLibraryService
@@ -55,6 +56,28 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.wsservice.connect();
+
+    this.messageSub = this.wsservice.onMessage().subscribe({
+      next: (res: any) => {
+        this.waitingResponse = false;
+        if (res.response) {
+          this.listOfMessages.push({
+            role: 'assistant',
+            content: res.response,
+          });
+        }
+        console.log('this response', res);
+      },
+      error: (err: any) => {
+        this.waitingResponse = false;
+        this.errorResponse = true;
+        this.listOfMessages.push({
+          role: 'assistant',
+          content: this.errorMessage,
+        });
+        console.log('this error', err);
+      },
+    });
   }
 
   getIcon(ind: number): string {
@@ -73,7 +96,7 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
         role: 'user',
         content: <string>this.inputText,
       });
-      this.inputText = undefined;
+
       this.waitingResponse = true;
 
       const request = {
@@ -83,29 +106,12 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
       };
       //Do the call
       this.wsservice.send(request);
-      this.wsservice.onMessage().subscribe({
-        next: (res: any) => {
-          this.waitingResponse = false;
-          if (res.response) {
-            this.listOfMessages.push({
-              role: 'assistant',
-              content: res.response,
-            });
-          }
-        },
-        error: (err: any) => {
-          this.waitingResponse = false;
-          this.errorResponse = true;
-          this.listOfMessages.push({
-            role: 'assistant',
-            content: this.errorMessage,
-          });
-        },
-      });
+      this.inputText = undefined;
     }
   }
 
   ngOnDestroy(): void {
-    this.wsservice.disconnect()
+    this.wsservice.disconnect();
+    this.messageSub?.unsubscribe();
   }
 }
