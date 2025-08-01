@@ -8,11 +8,11 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeicons/primeicons.css";
 :root {
-  --bg-header-chatbot-box-message: #fd751e;
-  --bg-chatbot-icon-container: #fd751e;
-  --chatbot-scrollbar-color: #ed935f;
+  --bg-header-chatbot-box-message: #333446;
+  --bg-chatbot-icon-container: #7F8CAA;
+  --chatbot-scrollbar-color: #B8CFCE;
   --color-header-chatbot-box-message: white;
-  --bg-textbox: white;
+  --bg-textbox: #EAEFEF;
   --color-user-message: black;
   --color-chatbot-message: white;
   --bg-user-icon-container: white;
