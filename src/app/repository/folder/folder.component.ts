@@ -60,7 +60,7 @@ export class FolderComponent implements OnInit {
   @ViewChild('contextMenufiles') contextMenufiles!: ContextMenu;
 
   icons: ChatbotIcons = {
-    chatbotIcon: 'assets/icons/chatbot.svg',
+    chatbotIcon: 'assets/icons/Chatbot.gif',
     userIcon: 'assets/icons/user.svg',
   };
   basePath: string = 'http://localhost:3800/message';

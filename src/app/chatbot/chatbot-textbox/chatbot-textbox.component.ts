@@ -102,7 +102,7 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
 
   getIcon(ind: number): string {
     return ind == 0 || ind % 2 == 0
-      ? this.icons.chatbotIcon
+      ? 'assets/icons/chatboticon.png'
       : this.icons.userIcon;
   }
 
