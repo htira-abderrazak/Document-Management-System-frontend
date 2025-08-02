@@ -46,17 +46,35 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
   inputText: string | undefined;
   waitingResponse: boolean = false;
   errorResponse: boolean = false;
-  listOfMessages: ChatbotMsg[] = [
-    { role: 'assistant', content: this.welcomeMessage },
-  ];
+  listOfMessages: ChatbotMsg[] = [];
   private messageSub?: Subscription;
+  private WsConnection?: Subscription;
+
   constructor(
     private http: HttpClient,
     private wsservice: MyChatbotLibraryService
   ) {}
 
   ngOnInit() {
-    this.wsservice.connect();
+    this.WsConnection = this.wsservice.connect().subscribe({
+      next: (msg) => {
+        // this.waitingResponse = false;
+        // if (msg.response) {
+        //   this.listOfMessages.push({
+        //     role: 'assistant',
+        //     content: msg.response,
+        //   });
+        // }
+        // if (msg.reload == true) this.triggerParent.emit();
+      },
+      error: (err) => {
+        this.listOfMessages.push({
+          role: 'assistant',
+          content: this.errorMessage,
+        });
+      },
+      complete: () => console.log('WebSocket connection closed'),
+    });
 
     this.messageSub = this.wsservice.onMessage().subscribe({
       next: (res: any) => {
@@ -114,5 +132,6 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.wsservice.disconnect();
     this.messageSub?.unsubscribe();
+    this.WsConnection?.unsubscribe();
   }
 }
