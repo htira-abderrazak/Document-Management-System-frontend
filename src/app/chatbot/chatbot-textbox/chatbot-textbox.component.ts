@@ -72,6 +72,7 @@ export class ChatbotTextboxComponent implements OnInit, OnDestroy {
           role: 'assistant',
           content: this.errorMessage,
         });
+        return;
       },
       complete: () => console.log('WebSocket connection closed'),
     });
